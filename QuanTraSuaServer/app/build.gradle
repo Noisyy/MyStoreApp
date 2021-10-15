@@ -1,0 +1,90 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.example.quantrasuaserver"
+        minSdk 23
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //Fire base
+    implementation 'com.google.firebase:firebase-database:20.0.1'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.firebaseui:firebase-ui-auth:5.1.0'
+    //Retrofit2
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    //Hai thư viện này để code java thôi
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+
+    //Cái này là cái dialog loading nè
+    implementation 'com.github.d-max:spots-dialog:1.1@aar'
+
+    //Cái này là cái khung để tải ảnh thôi
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    //Hai cái thư viện này dùng để hỗ trợ gán view và gọi callback cho mấy cái hàm thôi
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+
+    //Cái này dùng để publish/subscribe mấy cái event với android thôi
+    implementation 'org.greenrobot:eventbus:3.2.0'
+    //Cái này làm mấy cái ô vuông vuông để đựng hình thôi (1.2.0 là bản gốc)
+    implementation 'com.github.andremion:counterfab:1.2.2'
+    //Button + -
+    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
+    //Cái này là cái giống như session của web vậy dùng để tạo giỏ hàng 2.2.0-rc01
+    implementation 'androidx.room:room-rxjava2:2.3.0'
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
+
+    implementation 'com.github.andremion:counterfab:1.2.2'
+
+    //Hai cái thư viện để lấy local hiện tại
+    implementation 'com.karumi:dexter:6.2.3'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    //Expandable Layout
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_drinks_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/brandon_medium"
+        android:hint="@string/edt_drinks_name"
+        android:textSize="22sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_drinks_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/brandon_medium"
+        android:hint="@string/edt_drinks_price"
+        android:inputType="number"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="15sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_drinks_description"
+        android:hint="@string/edt_drinks_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/brandon_medium"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/img_drink"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>

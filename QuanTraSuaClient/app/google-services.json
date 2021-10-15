@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "10469446902",
+    "firebase_url": "https://projectandroid-c4183-default-rtdb.firebaseio.com",
+    "project_id": "projectandroid-c4183",
+    "storage_bucket": "projectandroid-c4183.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10469446902:android:fa0b9d673aaa9f2f7708d7",
+        "android_client_info": {
+          "package_name": "com.example.quantrasuaclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10469446902-nbfsqs13n9tc59k2tbmi7kpcnqu4msok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChjdoaaA8w6W8DWu_SfSyg3Lu5QYh0Vw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10469446902-nbfsqs13n9tc59k2tbmi7kpcnqu4msok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
