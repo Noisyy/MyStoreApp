@@ -73,7 +73,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
                 .append(" ")
                 .append(simpleDateFormat.format(date)));
         holder.txt_order_number.setText(new StringBuffer("No. ").append(orderList.get(position).getOrderNumber()));
-        holder.txt_order_comment.setText(new StringBuffer("Lưu ý: ").append(orderList.get(position).getComment()));
+        holder.txt_order_comment.setText(new StringBuffer("Số ĐT: ").append(orderList.get(position).getComment()));
         holder.txt_order_status.setText(new StringBuffer("Trạng thái: ").append(Common.convertStatusToText(orderList.get(position).getOrderStatus())));
         holder.setRecyclerClickListener((view, pos) ->
                 //Bug status = 2 out app

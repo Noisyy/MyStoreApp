@@ -2,134 +2,181 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:layout_margin="12dp"
+    android:background="@drawable/dialog_conner_10"
+    android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/brandon_medium">
+        android:background="@drawable/dialog_conner_top_left_right"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/tv_place_order"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_slab_bold"
+            android:padding="5dp"
+            android:text="@string/tv_info_user"
+            android:textColor="@color/app_color_default"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/edt_addresss"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/brandon_medium"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/custom_edit_text"
+            android:fontFamily="@font/roboto_slab"
             android:hint="@string/edt_address"
-            android:importantForAutofill="no"
-            android:inputType="text" />
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:padding="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/txt_address_detail"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/brandon_medium"
-        android:text="@string/txt_order_comment"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/brandon_medium">
+        <TextView
+            android:id="@+id/txt_address_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/roboto_slab"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@string/action_search"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/edt_comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/brandon_medium"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/custom_edit_text"
+            android:fontFamily="@font/roboto_slab"
             android:hint="@string/txt_order_comment"
-            android:importantForAutofill="no"
-            android:inputType="text" />
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:padding="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/brandon_medium"
-        android:text="@string/tv_shipping"
-        android:textColor="@color/dialog_header_color"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RadioButton
-            android:id="@+id/rdi_home_address"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:fontFamily="@font/brandon_medium"
-            android:text="@string/rdi_home_address"
-            android:textColor="@color/dialog_text_color"
-            android:textSize="18sp"
-            android:textStyle="italic" />
+            android:fontFamily="@font/roboto_slab_bold"
+            android:padding="5dp"
+            android:text="@string/tv_ship"
+            android:textColor="@color/app_color_default"
+            android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/rdi_other_address"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/brandon_medium"
-            android:text="@string/rdi_other_address"
-            android:textColor="@color/dialog_text_color"
-            android:textSize="18sp"
-            android:textStyle="italic" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rdi_ship_this_address"
+            <RadioButton
+                android:id="@+id/rdi_home_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="@font/roboto_slab"
+                android:text="@string/rdi_home_address"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rdi_ship_this_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                android:text="@string/rdi_ship_this_address"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rdi_other_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                android:text="@string/rdi_other_address"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/brandon_medium"
-            android:text="@string/rdi_ship_this_address"
-            android:textColor="@color/dialog_text_color"
-            android:textSize="18sp"
-            android:textStyle="italic" />
+            android:fontFamily="@font/roboto_slab_bold"
+            android:padding="5dp"
+            android:text="@string/payments"
+            android:textColor="@color/app_color_default"
+            android:textSize="18sp" />
 
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/brandon_medium"
-        android:text="@string/payments"
-        android:textColor="@color/dialog_header_color"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RadioButton
-            android:id="@+id/rdi_cod"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:fontFamily="@font/brandon_medium"
-            android:text="@string/rdi_cod"
-            android:textColor="@color/dialog_text_color"
-            android:textSize="18sp"
-            android:textStyle="italic" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rdi_braintree"
+            <RadioButton
+                android:id="@+id/rdi_cod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="@font/roboto_slab"
+                android:text="@string/rdi_cod"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rdi_braintree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                android:text="@string/rdi_braintree"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/brandon_medium"
-            android:text="@string/rdi_braintree"
-            android:textColor="@color/dialog_text_color"
-            android:textSize="18sp"
-            android:textStyle="italic" />
-    </RadioGroup>
+            android:layout_margin="12dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_cancel"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:text="@string/btn_cancel"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_ok"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_ok"
+                android:fontFamily="@font/roboto_slab_bold"
+                android:text="@string/btn_ok"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

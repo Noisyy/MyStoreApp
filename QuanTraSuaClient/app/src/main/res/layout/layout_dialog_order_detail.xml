@@ -13,7 +13,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:text="@string/txt_title_detail"
-        android:textColor="@color/black"
+        android:textColor="@color/app_color_default"
         android:textSize="24sp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -36,10 +36,10 @@
         android:orientation="horizontal"
         tools:ignore="RtlHardcoded">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_ok"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:fontFamily="@font/roboto_slab_bold"
             android:padding="10dp"

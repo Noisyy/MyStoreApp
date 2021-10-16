@@ -224,7 +224,6 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
     @OnClick(R.id.btn_place_order)
     void onPlaceOrderClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Hoàn tất đơn hàng");
 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_place_order, null);
 
@@ -235,15 +234,17 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         RadioButton rdi_other_address = view.findViewById(R.id.rdi_other_address);
         RadioButton rdi_ship_to_this = view.findViewById(R.id.rdi_ship_this_address);
         RadioButton rdi_cod = view.findViewById(R.id.rdi_cod);
-
+        Button btn_ok = view.findViewById(R.id.btn_ok);
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
 
         //Data
-        edt_address.setText(Common.currentUser.getAddress()); //By default we select home address, so user's address will display
-
+        edt_address.setText(Common.currentUser.getAddress()); //Address default
+        edt_comment.setText(Common.currentUser.getPhone()); //Phone default
         //Event
         rdi_home.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 edt_address.setText(Common.currentUser.getAddress());
+                edt_comment.setText(Common.currentUser.getPhone());
                 txt_address.setVisibility(View.GONE);
             }
         });
@@ -255,9 +256,6 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
             }
         });
 
-        rdi_ship_to_this.setOnCheckedChangeListener((compoundButton, b) -> {
-
-        });
         rdi_ship_to_this.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -285,8 +283,8 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
 
                         @Override
                         public void onSuccess(@NonNull String s) {
-                            edt_address.setText(coordinates);
-                            txt_address.setText(s);
+                            edt_address.setText(s);
+                            txt_address.setText("Tọa độ: "+ coordinates);
                             txt_address.setVisibility(View.VISIBLE);
                         }
 
@@ -302,16 +300,31 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         });
 
         builder.setView(view);
-        builder.setNegativeButton("Từ chối", (dialogInterface, i) ->
-                dialogInterface.dismiss()).setPositiveButton("Đồng Ý",
-                (dialogInterface, i) -> {
-                    if (rdi_cod.isChecked())
-                        paymentCOD(edt_address.getText().toString(), edt_comment.getText().toString());
-
-                });
-
         AlertDialog dialog = builder.create();
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(false);
         dialog.show();
+        btn_cancel.setOnClickListener(v -> dialog.dismiss());
+        btn_ok.setOnClickListener(v -> {
+            if(edt_address.getText().toString().isEmpty()){
+                edt_address.setError("Vui lòng cung cấp địa chỉ nhận hàng!");
+                edt_address.requestFocus();
+            }else if(edt_comment.getText().toString().isEmpty()){
+                edt_comment.setError("Vui lòng cung cấp số điện thoại liên lạc!");
+                edt_comment.requestFocus();
+            }
+            else {
+                if (rdi_cod.isChecked())
+                    paymentCOD(edt_address.getText().toString(), edt_comment.getText().toString());
+                dialog.dismiss();
+            }
+        });
+
     }
 
     private void paymentCOD(String address, String comment) {

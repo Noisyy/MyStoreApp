@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/drawable/cb_selector.xml" value="0.14739583333333334" />
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/drawable/custom_edit_text.xml" value="0.14739583333333334" />
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/drawable/custom_noty.xml" value="0.14739583333333334" />
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/drawable/selector_menu.xml" value="0.14739583333333334" />
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/custom_place.xml" value="0.264" />
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_dialog_order_detail.xml" value="0.176" />
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_order_detail_item.xml" value="0.13125" />
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_order_item.xml" value="0.2" />
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_place_order.xml" value="0.264" />
+        <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_rating.xml" value="0.13125" />
         <entry key="..\:/LEARN/SOURCE CODE/STORE_APP/App_Tra_Sua/QuanTraSuaClient/app/src/main/res/drawable/abc.xml" value="0.18611111111111112" />
         <entry key="..\:/LEARN/SOURCE CODE/STORE_APP/App_Tra_Sua/QuanTraSuaClient/app/src/main/res/drawable/boder_layout.xml" value="0.14270833333333333" />
         <entry key="..\:/LEARN/SOURCE CODE/STORE_APP/App_Tra_Sua/QuanTraSuaClient/app/src/main/res/drawable/card_coner.xml" value="0.14270833333333333" />

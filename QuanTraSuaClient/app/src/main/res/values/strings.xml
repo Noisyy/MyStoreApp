@@ -46,12 +46,12 @@
     <string name="txt_drinks_quantity">So Luong: 1</string>
     <string name="txt_order_date">Today at: 13:05:56 pm</string>
     <string name="txt_order_status">Trang thái:</string>
-    <string name="txt_order_comment">Thông tin thêm</string>
+    <string name="txt_order_comment">Số điện thoại</string>
     <string name="edt_address">Địa Chỉ Nhận Hàng</string>
     <string name="tv_shipping">Phương thức vận chuyển</string>
     <string name="rdi_home_address">Địa chỉ đã lưu</string>
     <string name="rdi_other_address">Địa chỉ khác</string>
-    <string name="rdi_ship_this_address">Tọa độ hiện tại</string>
+    <string name="rdi_ship_this_address">Địa chỉ hiện tại</string>
     <string name="payments">Phương thức thanh toán</string>
     <string name="rdi_cod">Thanh toán khi nhận hàng</string>
     <string name="rdi_braintree">Thanh toán trực tuyến</string>
@@ -75,5 +75,8 @@
     <string name="edt_update_order">CẬP NHẬT SẢN PHẨM</string>
     <string name="tv_subscribe_news">Chọn vào ô và xác nhận nếu bạn muốn nhận được thông báo từ chúng tôi!</string>
     <string name="tv_subscribe">ĐĂNG KÝ NHẬN THÔNG BÁO</string>
+    <string name="tv_place_order">HOÀN TẤT ĐƠN HÀNG</string>
+    <string name="tv_info_user">Thông tin khách hàng</string>
+    <string name="tv_ship">Lựa chọn nhận hàng</string>
 
 </resources>
