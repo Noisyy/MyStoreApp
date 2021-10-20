@@ -429,6 +429,7 @@ public class DrinkDetailFragment extends Fragment implements TextWatcher {
     // Chổ này để hiển thị thông tin lên
     private void displayInfo(DrinksModel drinksModel) {
         scheduleDismiss();
+        rdi_group_size.removeAllViews();
         Glide.with(requireContext()).load(drinksModel.getImage()).into(img_drinks);
         drinks_name.setText(new StringBuffer(drinksModel.getName()));
         drinks_description.setText(new StringBuffer(drinksModel.getDescription()));
@@ -440,9 +441,10 @@ public class DrinkDetailFragment extends Fragment implements TextWatcher {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(Common.selectDrinks.getName());
 
         //Size
-        for (SizeModel sizeModel : Common.selectDrinks.getSize()) {
+        for (SizeModel sizeModel : Common.selectDrinks.getSize()){
             RadioButton radioButton = new RadioButton(getContext());
             radioButton.setTextSize(18);
+            Common.selectDrinks.setUserSelectedSize(null);
             Typeface face = getResources().getFont(R.font.roboto_slab);
             radioButton.setTypeface(face);
             radioButton.setOnCheckedChangeListener((compoundButton, b) -> {
@@ -507,6 +509,7 @@ public class DrinkDetailFragment extends Fragment implements TextWatcher {
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
+        dialog.show();
 
         btnCancel.setOnClickListener(v -> dialog.dismiss());
         btnOk.setOnClickListener(v -> {
@@ -522,9 +525,6 @@ public class DrinkDetailFragment extends Fragment implements TextWatcher {
             drinkDetailViewModel.setCommentModel(commentModel);
             dialog.dismiss();
         });
-
-        dialog.show();
-
     }
 
     //Su kien cua cai add on
