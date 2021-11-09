@@ -30,7 +30,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,10 +47,14 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.braintreepayments.api.dropin.DropInRequest;
+import com.braintreepayments.api.dropin.DropInResult;
+import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.example.quantrasuaclient.Callback.ISearchCategoryCallbackListener;
 import com.example.quantrasuaclient.Database.DataSource.ICartDataSource;
 import com.example.quantrasuaclient.Database.Local.RoomDatabase;
 import com.example.quantrasuaclient.Model.AddonModel;
+import com.example.quantrasuaclient.Model.BraintreeTransaction;
 import com.example.quantrasuaclient.Model.CategoryModel;
 import com.example.quantrasuaclient.Model.DiscountModel;
 import com.example.quantrasuaclient.Model.DrinksModel;
@@ -69,8 +72,10 @@ import com.example.quantrasuaclient.EventBus.UpdateItemInCart;
 import com.example.quantrasuaclient.Model.OrderModel;
 import com.example.quantrasuaclient.Model.SizeModel;
 import com.example.quantrasuaclient.R;
+import com.example.quantrasuaclient.Remote.ICloudFunctions;
 import com.example.quantrasuaclient.Remote.IFCMService;
 import com.example.quantrasuaclient.Remote.RetrofitFCMClient;
+import com.example.quantrasuaclient.Remote.RetrofitICloudClient;
 import com.example.quantrasuaclient.ScanQRActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -112,12 +117,15 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListener, ISearchCategoryCallbackListener, TextWatcher {
 
     private static final int SCAN_QR_PERMISSION = 7171;
+    private static final int REQUEST_BRAINTREE_CODE = 7777;
+    String address, comment;
     private BottomSheetDialog addonBottomSheetDialog;
     private ChipGroup chip_group_addon, chip_group_user_select_addon;
     private EditText edt_search;
@@ -136,6 +144,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
     Location currentLocation;
     ILoadTimeFromFireBaseListener listener;
     IFCMService ifcmService;
+    ICloudFunctions cloudFunctions;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.recycler_cart)
@@ -234,6 +243,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         RadioButton rdi_other_address = view.findViewById(R.id.rdi_other_address);
         RadioButton rdi_ship_to_this = view.findViewById(R.id.rdi_ship_this_address);
         RadioButton rdi_cod = view.findViewById(R.id.rdi_cod);
+        RadioButton rdi_braintree = view.findViewById(R.id.rdi_braintree);
         Button btn_ok = view.findViewById(R.id.btn_ok);
         Button btn_cancel = view.findViewById(R.id.btn_cancel);
 
@@ -284,7 +294,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                         @Override
                         public void onSuccess(@NonNull String s) {
                             edt_address.setText(s);
-                            txt_address.setText("Tọa độ: "+ coordinates);
+                            txt_address.setText("Tọa độ: " + coordinates);
                             txt_address.setVisibility(View.VISIBLE);
                         }
 
@@ -311,16 +321,23 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         dialog.show();
         btn_cancel.setOnClickListener(v -> dialog.dismiss());
         btn_ok.setOnClickListener(v -> {
-            if(edt_address.getText().toString().isEmpty()){
+            if (edt_address.getText().toString().isEmpty()) {
                 edt_address.setError("Vui lòng cung cấp địa chỉ nhận hàng!");
                 edt_address.requestFocus();
-            }else if(edt_comment.getText().toString().isEmpty()){
+            } else if (edt_comment.getText().toString().isEmpty()) {
                 edt_comment.setError("Vui lòng cung cấp số điện thoại liên lạc!");
                 edt_comment.requestFocus();
-            }
-            else {
+            } else {
                 if (rdi_cod.isChecked())
                     paymentCOD(edt_address.getText().toString(), edt_comment.getText().toString());
+                else if (rdi_braintree.isChecked()) {
+                    address = edt_address.getText().toString();
+                    comment = edt_comment.getText().toString();
+                    if (!TextUtils.isEmpty(Common.currentToken)) {
+                        DropInRequest dropInRequest = new DropInRequest().clientToken(Common.currentToken);
+                        startActivityForResult(dropInRequest.getIntent(getContext()), REQUEST_BRAINTREE_CODE);
+                    }
+                }
                 dialog.dismiss();
             }
         });
@@ -484,6 +501,8 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         View root = inflater.inflate(R.layout.fragment_cart, container, false);
 
         ifcmService = RetrofitFCMClient.getInstance().create(IFCMService.class);
+        cloudFunctions = RetrofitICloudClient.getInstance().create(ICloudFunctions.class);
+
         listener = this;
         cartViewModel.initCartDataSource(getContext());
         cartViewModel.getMutableLiveDataListCartItems().observe(getViewLifecycleOwner(), cartItems -> {
@@ -912,10 +931,10 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         //Show Dialog
         AlertDialog dialog = builder.create();
         Window window = dialog.getWindow();
-        if(window == null){
+        if (window == null) {
             return;
         }
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
         dialog.show();
@@ -1065,6 +1084,81 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_BRAINTREE_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                assert data != null;
+                DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
+                PaymentMethodNonce nonce = result.getPaymentMethodNonce();
+
+                //Calculate sum cart
+                cartDataSource.sumPriceInCart(Common.currentUser.getUid())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new SingleObserver<Double>() {
+                            @Override
+                            public void onSubscribe(@NonNull Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(@NonNull Double totalPrice) {
+                                //Get all item in cart to create order
+                                compositeDisposable.add(cartDataSource.getAllCart(Common.currentUser.getUid())
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(cartItems -> {
+                                            //submit payment
+                                            assert nonce != null;
+                                            compositeDisposable.add(cloudFunctions.submitPayment(totalPrice,
+                                                    nonce.getNonce())
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(braintreeTransaction -> {
+                                                        if (braintreeTransaction.isSuccess()) {
+                                                            double finalPrice = totalPrice; //we will modify this formula for discount late
+                                                            OrderModel order = new OrderModel();
+                                                            order.setUserId(Common.currentUser.getUid());
+                                                            order.setUserName(Common.currentUser.getName());
+                                                            order.setUserPhone(Common.currentUser.getPhone());
+                                                            order.setShippingAddress(address);
+                                                            order.setComment(comment);
+
+                                                            if (currentLocation != null) {
+                                                                order.setLat(currentLocation.getLatitude());
+                                                                order.setLng(currentLocation.getLongitude());
+                                                            } else {
+                                                                order.setLat(-0.1f);
+                                                                order.setLng(-0.1f);
+                                                            }
+                                                            order.setCartItemList(cartItems);
+                                                            order.setTotalPayment(totalPrice);
+                                                            if (Common.discountApply != null)
+                                                                order.setDiscount(Common.discountApply.getPercent());
+                                                            else
+                                                                order.setDiscount(0);
+                                                            order.setFinalPayment(finalPrice);
+                                                            order.setCod(false);
+                                                            order.setTransactionId(braintreeTransaction.getTransaction().getId());
+
+                                                            //Submit this order object to Firebase
+                                                            //writeOrderToFirebase(order);
+                                                            syncLocalTimeWithGlobalTime(order);
+                                                        }
+                                                    }, throwable -> {
+
+                                                    }));
+                                        }, throwable -> {
+                                            Toast.makeText(getContext(), "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }));
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable e) {
+                                Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        }
         if (requestCode == SCAN_QR_PERMISSION) {
             if (requestCode == Activity.RESULT_OK) {
                 edt_discount_code.setText(data.getStringExtra(Common.QR_CODE_TAG).toLowerCase());

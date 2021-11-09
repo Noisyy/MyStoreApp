@@ -64,7 +64,7 @@ public class Common {
     public static RoomDatabase roomDatabase;
     public static FavoriteRepository favoriteRepository;
     public static DiscountModel discountApply;
-    public static String navFavorite = "Yêu thích";
+    public static String currentToken="";
 
     public static String formatPrice(double price) {
         if (price != 0) {

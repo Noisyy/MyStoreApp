@@ -104,4 +104,7 @@ dependencies {
 
     //Process dialog
     implementation('com.kaopiz:kprogresshud:1.0.2')
+
+    //Braintree
+    implementation('com.braintreepayments.api:drop-in:5.2.2')
 }

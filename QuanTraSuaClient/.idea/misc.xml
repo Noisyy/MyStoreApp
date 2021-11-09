@@ -3,6 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/drawable/dialog_conner_10.xml" value="0.2037037037037037" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/drawable/dialog_conner_top_left_right.xml" value="0.2037037037037037" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/activity_main.xml" value="0.13541666666666666" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/content_home.xml" value="0.13541666666666666" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/fragment_cart.xml" value="0.13541666666666666" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/fragment_home.xml" value="0.13541666666666666" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/fragment_menu.xml" value="0.13541666666666666" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/fragment_view_orders.xml" value="0.13541666666666666" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_cart_item.xml" value="0.13541666666666666" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_comment_item.xml" value="0.12107396149949341" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_dialog_order_detail.xml" value="0.2" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_dialog_rating_custom.xml" value="0.12107396149949341" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaClient/app/src/main/res/layout/layout_dialog_update_cart.xml" value="0.176" />
         <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/drawable/cb_selector.xml" value="0.14739583333333334" />
         <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/drawable/custom_edit_text.xml" value="0.14739583333333334" />
         <entry key="..\:/LEARN/SOURCE CODE/MyStoreApp/QuanTraSuaClient/app/src/main/res/drawable/custom_noty.xml" value="0.14739583333333334" />

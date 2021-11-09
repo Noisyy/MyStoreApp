@@ -57,7 +57,7 @@ public class FavoriteFragment extends Fragment {
     @BindView(R.id.recycler_fav)
     RecyclerView recycler_fav;
     MyFavoriteAdapter adapter;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     LayoutAnimationController layoutAnimationController;
     KProgressHUD dialog;
     //Notification cart
