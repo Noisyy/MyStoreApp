@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.HomeActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.QuanTraSuaClient.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/app_color_default"
+            app:titleTextAppearance="@style/RobotoTextViewStyle"
+            android:theme="@style/ToolbarColoredBackArrow"
+            app:popupTheme="@style/Theme.QuanTraSuaClient.PopupOverlay"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/layout_content_home" />
+
+    <com.andremion.counterfab.CounterFab
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/app_color_default"
+        app:tint="@color/white"
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_menu_cart" />
+
+    <com.andremion.counterfab.CounterFab
+        android:id="@+id/fab_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/fab_margin"
+        app:tint="@color/white"
+        app:maxImageSize="30dp"
+        app:backgroundTint="@color/app_color_default"
+        app:srcCompat="@drawable/ic_chat" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

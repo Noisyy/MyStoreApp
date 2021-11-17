@@ -151,5 +151,6 @@ public class  OrderModel {
     public void setOrderStatus(int orderStatus) {
         this.orderStatus = orderStatus;
     }
+
 }
 

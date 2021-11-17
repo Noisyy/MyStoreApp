@@ -16,10 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
-        android:fontFamily="@font/roboto_slab_bold"
+        android:fontFamily="@font/font_display"
         android:gravity="center"
         android:padding="5dp"
-        android:textColor="@color/black"
+        android:textColor="#757575"
         android:text="@string/popular_categories"
         android:textSize="17sp" />
 

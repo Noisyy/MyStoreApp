@@ -1,4 +1,4 @@
-package com.example.quantrasuaclient.services;
+package com.example.quantrasuaclient.Services;
 
 
 import android.graphics.Bitmap;

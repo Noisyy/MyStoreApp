@@ -1,7 +1,7 @@
 package com.example.quantrasuaclient.Model;
 
 public class UserModel {
-    private String uid,name,address,phone;
+    private String uid,name,address,phone,image;
 
     public UserModel() {
     }
@@ -43,5 +43,13 @@ public class UserModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -62,8 +62,6 @@
     <string name="menu_cart">GIỎ HÀNG</string>
     <string name="nav_favorite">SẢN PHẨM YÊU THÍCH</string>
     <string name="tv_favorite">Sản phẩm yêu thích</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_new_user">Đăng ký thành viên mới</string>
     <string name="edt_phone">Số điện thoại</string>
     <string name="nav_home">Trang chủ</string>
@@ -78,5 +76,7 @@
     <string name="tv_place_order">HOÀN TẤT ĐƠN HÀNG</string>
     <string name="tv_info_user">Thông tin khách hàng</string>
     <string name="tv_ship">Lựa chọn nhận hàng</string>
+    <string name="nav_profile">Người dùng</string>
+    <string name="btn_update_profile">Cập nhật</string>
 
 </resources>

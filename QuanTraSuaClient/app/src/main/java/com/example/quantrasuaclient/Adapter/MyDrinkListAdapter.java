@@ -63,6 +63,7 @@ public class MyDrinkListAdapter extends RecyclerView.Adapter<MyDrinkListAdapter.
         Glide.with(context).load(drinksModels.get(position).getImage()).into(holder.img_food_image);
         holder.txt_drink_price.setText(new StringBuffer().append(Common.formatPrice(drinksModels.get(position).getPrice())).append(" VNĐ"));
         holder.txt_drink_name.setText(new StringBuffer().append(drinksModels.get(position).getName()));
+        holder.txt_drink_description.setText(new StringBuffer().append(drinksModels.get(position).getDescription()));
 
         //Event
         holder.setListener((view, pos) -> {
@@ -161,7 +162,7 @@ public class MyDrinkListAdapter extends RecyclerView.Adapter<MyDrinkListAdapter.
         });
         //Xu ly favorite
         if(Common.favoriteRepository.isFavorite(Integer.parseInt(drinksModels.get(position).getId()))==1){
-            holder.img_fav.setImageResource(R.drawable.ic_favorite);
+            holder.img_fav.setImageResource(R.drawable.ic_menu_favorite);
         }else {
             holder.img_fav.setImageResource(R.drawable.ic_favorite_border);
         }
@@ -170,7 +171,7 @@ public class MyDrinkListAdapter extends RecyclerView.Adapter<MyDrinkListAdapter.
             public void onClick(View view) {
                 if(Common.favoriteRepository.isFavorite(Integer.parseInt(drinksModels.get(position).getId()))!=1){
                     addOrRemoveFavorite(drinksModels.get(position),true);
-                    holder.img_fav.setImageResource(R.drawable.ic_favorite);
+                    holder.img_fav.setImageResource(R.drawable.ic_menu_favorite);
                 }
                 else {
                     addOrRemoveFavorite(drinksModels.get(position),false);
@@ -210,6 +211,9 @@ public class MyDrinkListAdapter extends RecyclerView.Adapter<MyDrinkListAdapter.
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.txt_drink_price)
         TextView txt_drink_price;
+        @SuppressLint("NonConstantResourceId")
+        @BindView(R.id.txt_drink_description)
+        TextView txt_drink_description;
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.img_drink_image)
         ImageView img_food_image;

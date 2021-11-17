@@ -7,44 +7,50 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.quantrasuaclient.ui.home.HomeFragment"
+        android:name="com.example.quantrasuaclient.Fragment.Home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.quantrasuaclient.Fragment.Profile.Profile_Fragment"
+        android:label="NGƯỜI DÙNG"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
         android:id="@+id/nav_menu"
-        android:name="com.example.quantrasuaclient.ui.menu.MenuFragment"
+        android:name="com.example.quantrasuaclient.Fragment.Menu.MenuFragment"
         android:label="@string/menu_menu"
         tools:layout="@layout/fragment_menu" />
 
     <fragment
         android:id="@+id/nav_drink_list"
-        android:name="com.example.quantrasuaclient.ui.drinklist.DrinkListFragment"
+        android:name="com.example.quantrasuaclient.Fragment.Drink_List.DrinkListFragment"
         android:label="@string/menu_drink_list"
         tools:layout="@layout/fragment_drink_list" />
 
     <fragment
         android:id="@+id/nav_drink_detail"
-        android:name="com.example.quantrasuaclient.ui.drinksdetail.DrinkDetailFragment"
+        android:name="com.example.quantrasuaclient.Fragment.Drinks_Detail.DrinkDetailFragment"
         android:label="@string/menu_drink_detail"
-        tools:layout="@layout/drink_detail_fragment" />
+        tools:layout="@layout/fragment_drink_detail" />
 
     <fragment
         android:id="@+id/nav_cart"
-        android:name="com.example.quantrasuaclient.ui.cart.CartFragment"
+        android:name="com.example.quantrasuaclient.Fragment.Cart.CartFragment"
         android:label="@string/menu_cart"
         tools:layout="@layout/fragment_cart" />
 
     <fragment
         android:id="@+id/nav_view_orders"
-        android:name="com.example.quantrasuaclient.ui.view_orders.ViewOrdersFragment"
+        android:name="com.example.quantrasuaclient.Fragment.View_Orders.ViewOrdersFragment"
         android:label="@string/menu_shipping"
         tools:layout="@layout/fragment_cart" />
 
     <fragment
         android:id="@+id/nav_favorite"
-        android:name="com.example.quantrasuaclient.ui.favorite.FavoriteFragment"
+        android:name="com.example.quantrasuaclient.Fragment.Favorite.FavoriteFragment"
         android:label="@string/nav_favorite"
-        tools:layout="@layout/favorite_fragment" />
+        tools:layout="@layout/fragment_favorite" />
 
 </navigation>

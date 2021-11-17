@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_category"
-        android:name="com.example.quantrasuaserver.ui.category.CategoryFragment"
+        android:name="com.example.quantrasuaserver.Fragment.category.CategoryFragment"
         android:label="@string/menu_category"
         tools:layout="@layout/fragment_category" />
 
     <fragment
         android:id="@+id/nav_drinks_list"
-        android:name="com.example.quantrasuaserver.ui.drinks_list.DrinksListFragment"
+        android:name="com.example.quantrasuaserver.Fragment.drinks_list.DrinksListFragment"
         android:label="@string/menu_drinkslist"
         tools:layout="@layout/fragment_drink_list">
         <action
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/nav_order"
-        android:name="com.example.quantrasuaserver.ui.order.OrderFragment"
+        android:name="com.example.quantrasuaserver.Fragment.order.OrderFragment"
         android:label="@string/menu_order"
         tools:layout="@layout/fragment_order">
         <action
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/nav_shipper"
-        android:name="com.example.quantrasuaserver.ui.shipper.ShipperFragment"
+        android:name="com.example.quantrasuaserver.Fragment.shipper.ShipperFragment"
         android:label="@string/menu_shipper"
         tools:layout="@layout/fragment_shipper">
         <action
@@ -49,9 +49,9 @@
 
     <fragment
         android:id="@+id/nav_best_deals"
-        android:name="com.example.quantrasuaserver.ui.best_deals.BestDealsFragment"
+        android:name="com.example.quantrasuaserver.Fragment.best_deals.BestDealsFragment"
         android:label="@string/menu_best_deals"
-        tools:layout="@layout/best_deals_fragment">
+        tools:layout="@layout/fragment_best_deals">
         <action
             android:id="@+id/clearBackstack"
             app:launchSingleTop="true"
@@ -61,9 +61,9 @@
 
     <fragment
         android:id="@+id/nav_most_popular"
-        android:name="com.example.quantrasuaserver.ui.most_popular.MostPopularFragment"
+        android:name="com.example.quantrasuaserver.Fragment.most_popular.MostPopularFragment"
         android:label="@string/menu_most_popular"
-        tools:layout="@layout/most_popular_fragment">
+        tools:layout="@layout/fragment_most_popular">
         <action
             android:id="@+id/clearBackstack"
             app:launchSingleTop="true"
@@ -73,9 +73,9 @@
 
     <fragment
         android:id="@+id/nav_discount"
-        android:name="com.example.quantrasuaserver.ui.discount.DiscountFragment"
+        android:name="com.example.quantrasuaserver.Fragment.discount.DiscountFragment"
         android:label="@string/menu_discount"
-        tools:layout="@layout/discount_fragment">
+        tools:layout="@layout/fragment_discount">
         <action
             android:id="@+id/clearBackstack"
             app:launchSingleTop="true"

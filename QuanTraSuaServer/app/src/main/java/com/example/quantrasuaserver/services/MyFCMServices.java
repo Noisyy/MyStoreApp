@@ -1,11 +1,11 @@
-package com.example.quantrasuaserver.services;
+package com.example.quantrasuaserver.Services;
 
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
 import com.example.quantrasuaserver.Common.Common;
-import com.example.quantrasuaserver.MainActivity;
+import com.example.quantrasuaserver.Activity.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
