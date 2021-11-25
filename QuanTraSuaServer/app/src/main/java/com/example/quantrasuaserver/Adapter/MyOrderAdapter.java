@@ -52,6 +52,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.MyViewHo
                 .inflate(R.layout.layout_order_item, parent, false));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Glide.with(context)
@@ -59,13 +60,13 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.MyViewHo
                 .into(holder.img_drinks_image);
         holder.txt_order_number.setText("No." + orderModelList.get(position).getKey());
         Common.setSpanStringColor("Ngày đặt: ", simpleDateFormat.format(orderModelList.get(position).getCreateDate()),
-                holder.txt_time, Color.parseColor("#333639"));
+                holder.txt_time, Color.BLACK);
         Common.setSpanStringColor("Trạng thái: ", Common.convertStatusToString(orderModelList.get(position).getOrderStatus()),
-                holder.txt_order_status, Color.parseColor("#00579A"));
+                holder.txt_order_status, Color.parseColor("#dd2c00"));
         Common.setSpanStringColor("Khách hàng: ", orderModelList.get(position).getUserName(),
-                holder.txt_name, Color.parseColor("#00574B"));
+                holder.txt_name, Color.BLACK);
         Common.setSpanStringColor("Số lượng sản phẩm: ", orderModelList.get(position).getCartItemList() == null ? "0" :
-                String.valueOf(orderModelList.get(position).getCartItemList().size()), holder.txt_number_item, Color.parseColor("#4B647D"));
+                String.valueOf(orderModelList.get(position).getCartItemList().size()), holder.txt_number_item, Color.BLACK);
         holder.setRecyclerClickListener((view, pos) -> {
             //Bug status = 2 out app
             showDialog(orderModelList.get(pos).getCartItemList());

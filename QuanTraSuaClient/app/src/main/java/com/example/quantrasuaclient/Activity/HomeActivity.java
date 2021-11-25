@@ -91,6 +91,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public static TextView txt_user, txt_phone;
     @SuppressLint("StaticFieldLeak")
     public static ImageView imageView;
+    @SuppressLint("StaticFieldLeak")
     public static Context context;
 
 
@@ -130,7 +131,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         ButterKnife.bind(this);
         cartDataSource = new CartDataSource(RoomDatabase.getInstance(this).cartDAO());
-
 
         setSupportActionBar(binding.appBarHome.toolbar);
         binding.appBarHome.fab.setOnClickListener(view -> navController.navigate(R.id.nav_cart));
@@ -324,7 +324,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         }
     }
-
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onCategorySelected(CategoryClick event) {

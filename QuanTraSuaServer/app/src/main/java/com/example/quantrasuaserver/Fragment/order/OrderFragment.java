@@ -140,10 +140,10 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
         int width = displayMetrics.widthPixels;
 
 
-        MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(), recycler_order, width / 6) {
+        MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(), recycler_order, Common.BUTTON_SIZE) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
-                buf.add(new MyButton(getContext(), "Gọi điện", 30, 0, Color.parseColor("#560027"), pos -> {
+                buf.add(new MyButton(getContext(), Common.OPTIONS_CALL, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_CALL), pos -> {
                     Dexter.withActivity(getActivity())
                             .withPermission(Manifest.permission.CALL_PHONE)
                             .withListener(new PermissionListener() {
@@ -168,9 +168,9 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
                                 }
                             }).check(); //Don't forget call check()
                 }));
-                buf.add(new MyButton(getContext(), "Xóa nè", 25, 0, Color.parseColor("#F44336"), pos -> {
+                buf.add(new MyButton(getContext(), Common.OPTIONS_DELETE, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_DELETE), pos -> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-                            .setTitle("Hủy đơn hàng")
+                            .setTitle("Cảnh báo")
                             .setMessage("Bạn có chắc chắn muốn hủy đơn hàng này?")
                             .setNegativeButton(Common.OPTIONS_CANCEL, (dialogInterface, i) -> dialogInterface.dismiss())
                             .setPositiveButton(Common.OPTIONS_OK, (dialogInterface, i) -> {
@@ -196,7 +196,7 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
                     Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
                     positiveButton.setTextColor(Color.RED);
                 }));
-                buf.add(new MyButton(getContext(), "Cập nhật", 25, 0, Color.parseColor("#2196F3"), pos ->
+                buf.add(new MyButton(getContext(), Common.OPTIONS_UPDATE, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_UPDATE), pos ->
                         showEditDialog(adapter.getItemAtPosition(pos), pos)));
             }
         };

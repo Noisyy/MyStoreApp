@@ -6,56 +6,56 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_category"
-            android:icon="@drawable/category"
+            android:icon="@drawable/ic_category"
             android:title="@string/menu_category" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_discount"
-            android:icon="@drawable/ic_baseline_money_24"
+            android:icon="@drawable/ic_nav_discount"
             android:title="@string/menu_discount" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_send_news"
-            android:icon="@drawable/ic_baseline_markunread_24"
+            android:icon="@drawable/ic_nav_send_news"
             android:title="@string/menu_send" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_most_popular"
-            android:icon="@drawable/ic_baseline_whatshot_24"
+            android:icon="@drawable/ic_nav_most_popular"
             android:title="@string/menu_most_popular" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_best_deals"
-            android:icon="@drawable/ic_baseline_star_24"
+            android:icon="@drawable/ic_nav_best_deals"
             android:title="@string/menu_best_deals" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_order"
-            android:icon="@drawable/ic_baseline_perm_phone_msg_24"
+            android:icon="@drawable/ic_nav_order"
             android:title="@string/menu_order" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_shipper"
-            android:icon="@drawable/ic_baseline_local_shipping_24"
+            android:icon="@drawable/ic_nav_shipper"
             android:title="@string/menu_shipper" />
     </group>
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_sign_out"
-            android:icon="@drawable/ic_baseline_exit_to_app_24"
+            android:icon="@drawable/ic_nav_sign_out"
             android:title="@string/menu_sign_out" />
     </group>
 

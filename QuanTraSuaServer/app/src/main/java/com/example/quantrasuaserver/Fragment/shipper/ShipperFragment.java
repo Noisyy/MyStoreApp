@@ -3,28 +3,20 @@ package com.example.quantrasuaserver.Fragment.shipper;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.quantrasuaserver.Adapter.MyShipperAdapter;
@@ -38,7 +30,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +41,6 @@ import dmax.dialog.SpotsDialog;
 
 public class ShipperFragment extends Fragment {
 
-    private ShipperViewModel mViewModel;
     Unbinder unbinder;
     private AlertDialog dialog;
     private LayoutAnimationController layoutAnimationController;
@@ -65,7 +55,7 @@ public class ShipperFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View itemView = inflater.inflate(R.layout.fragment_shipper, container, false);
-        mViewModel = new ViewModelProvider(this).get(ShipperViewModel.class);
+        ShipperViewModel mViewModel = new ViewModelProvider(this).get(ShipperViewModel.class);
         unbinder = ButterKnife.bind(this, itemView);
         initViews();
         mViewModel.getMessageError().observe(getViewLifecycleOwner(), s -> {
@@ -82,60 +72,6 @@ public class ShipperFragment extends Fragment {
             recycler_shipper.setLayoutAnimation(layoutAnimationController);
         });
         return itemView;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.drinks_list_menu, menu);
-
-        //Search
-        MenuItem menuItem = menu.findItem(R.id.action_search);
-
-        SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName()));
-
-        //Events
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                startSearchShipper(s);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-
-        //Clear text when click to clear button Search view
-        ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
-        closeButton.setOnClickListener(view -> {
-            EditText edt = searchView.findViewById(R.id.search_src_text);
-            edt.setText("");
-            searchView.setQuery("", false);
-            //Collapse the action view
-            searchView.onActionViewCollapsed();
-            //Collapse the search widget
-            menuItem.collapseActionView();
-            //Restore result to original
-            if (saveShipperBeforeSearchList != null)
-                mViewModel.getShipperMutableList().setValue(saveShipperBeforeSearchList);
-        });
-
-    }
-
-    private void startSearchShipper(String s) {
-        List<ShipperModel> resultShipper = new ArrayList<>();
-        for (int i = 0; i < shipperModelList.size(); i++) {
-            ShipperModel shipperModel = shipperModelList.get(i);
-            if (shipperModel.getPhone().toLowerCase().contains(s.toLowerCase()))
-            {
-                resultShipper.add(shipperModel);
-            }
-        }
-        mViewModel.getShipperMutableList().setValue(resultShipper);
     }
 
     private void initViews() {

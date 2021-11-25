@@ -45,7 +45,7 @@ import butterknife.OnClick;
 public class SizeAddonEditActivity extends AppCompatActivity {
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tool_bar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_name)
@@ -148,6 +148,7 @@ public class SizeAddonEditActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Save data
     private void saveData() {
         if (drinksEditPosition != -1) {
             Common.categorySelected.getDrinks().set(drinksEditPosition, Common.selectDrinks); // Save drinks to category
@@ -171,6 +172,7 @@ public class SizeAddonEditActivity extends AppCompatActivity {
         }
     }
 
+    //Set value default
     private void closeActivity() {
         edt_name.setText("");
         edt_price.setText("0");
@@ -242,6 +244,7 @@ public class SizeAddonEditActivity extends AppCompatActivity {
         }
     }
 
+    //Update Size
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onSizeModelUpdate(UpdateSizeModel event) {
         if (event.getSizeModelList() != null) {
@@ -249,7 +252,7 @@ public class SizeAddonEditActivity extends AppCompatActivity {
             Common.selectDrinks.setSize(event.getSizeModelList());
         }
     }
-
+    //Update Addon
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onAddonModelUpdate(UpdateAddonModel event) {
         if (event.getAddonModel() != null) {
@@ -258,6 +261,7 @@ public class SizeAddonEditActivity extends AppCompatActivity {
         }
     }
 
+    //Select Size
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onSizeSelectModel(SelectSizeModel event) {
         if (event.getSizeModel() != null) {

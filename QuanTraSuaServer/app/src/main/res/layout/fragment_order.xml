@@ -12,16 +12,17 @@
         android:fontFamily="@font/roboto_slab_bold"
         android:text="@string/order_count"
         android:padding="16dp"
-        android:textSize="22sp"
+        android:textSize="@dimen/font_medium"
         android:textStyle="bold"
         android:gravity="center"
-        app:drawableLeftCompat="@drawable/ic_baseline_speaker_notes_24" />
+        android:textColor="@color/black"
+        app:drawableLeftCompat="@drawable/ic_shipping" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_order"
         android:layout_width="match_parent"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_default"
         android:layout_height="match_parent" />
 
 </LinearLayout>

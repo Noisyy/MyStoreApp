@@ -35,9 +35,18 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class Common {
+    //Global
     public static final String OPTIONS_OK = "ĐỒNG Ý";
     public static final String OPTIONS_CANCEL = "TỪ CHỐI";
+    public static final int TEXT_SIZE = 50;
+    public static final int BUTTON_SIZE = 210;
+    public static final String OPTIONS_DELETE = "Xóa";
+    public static final String COLOR_DELETE = "#ff3d00";
+    public static final String OPTIONS_UPDATE = "Sửa";
+    public static final String COLOR_UPDATE = "#2962ff";
     public static final String SEVER_REF = "Server";
+    public static final String OPTIONS_CALL = "Gọi điện";
+    public static final String COLOR_CALL = "#1de9b6";
     public static final String CATEGORY_REF = "Category";
     public static final String NOTIFY_TITLE = "title";
     public static final String NOTIFY_CONTENT = "content";
@@ -59,15 +68,15 @@ public class Common {
     public static BestDealsModel bestDealsSelected;
     public static MostPopularModel mostPopularSelected;
     public static DiscountModel discountSelected;
-
-    //Bởi vì hầu hết các phần quản lý đều có 3 chức năng này nên tạo ra để dễ quản lý
+    public static String TV_UPDATE = "CẬP NHẬT SẢN PHẨM";
+    public static String TV_INSERT = "THÊM MỚI SẢN PHẨM";
+    //Because function usually 3 action create, update, delete
     public enum ACTION {
         CREATE,
         UPDATE,
         DELETE
     }
-
-    //Bởi vì lưu là lưu hong lấy 3 số 0 nên có hàm này để format lại Vd: 5 -> 5,000
+    //Format Price, example: 5 -> 5,000
     public static String formatPrice(double price) {
         if (price != 0) {
             DecimalFormat df = new DecimalFormat("#,##0.000");
@@ -77,8 +86,7 @@ public class Common {
         } else
             return "0.000";
     }
-
-    //Hai cái phía dưới để chỉnh mấy cái màu chử cho đẹp ơn
+    //Setting font
     public static void setSpanString(String welcome, String name, TextView textView) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         builder.append(welcome);
@@ -88,7 +96,6 @@ public class Common {
         builder.append(spannableString);
         textView.setText(builder, TextView.BufferType.SPANNABLE);
     }
-
     public static void setSpanStringColor(String welcome, String name, TextView textView, int color) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         builder.append(welcome);
@@ -99,8 +106,7 @@ public class Common {
         builder.append(spannableString);
         textView.setText(builder, TextView.BufferType.SPANNABLE);
     }
-
-    // Tại vì status sẽ lưu dưới dạng số 0, 1, 2, 3 nên cần viết hàm để format thành chử
+    // Format status order
     public static String convertStatusToString(int orderStatus) {
         switch (orderStatus) {
             case 0:
@@ -116,7 +122,7 @@ public class Common {
         }
     }
 
-    //Khi nhận được thông báo từ client thông qua Firebase Message cloud thì cần có 1 hàm nhận và hiển thị thông báo
+    //Show message
     @SuppressLint("UnspecifiedImmutableFlag")
     public static void showNotification(Context context, int id, String title, String content, Intent intent) {
         PendingIntent pendingIntent = null;
@@ -141,8 +147,8 @@ public class Common {
         builder.setContentTitle(title)
                 .setContentText(content)
                 .setAutoCancel(true)
-                .setSmallIcon(R.drawable.messenger)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.milktea));
+                .setSmallIcon(R.drawable.icon_sms)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.app_icon));
         if (pendingIntent != null)
             builder.setContentIntent(pendingIntent);
         Notification notification = builder.build();
@@ -150,7 +156,7 @@ public class Common {
 
     }
 
-    //Ở lần đăng nhập đầu tiền người dùng sẽ được cập nhật token nếu thay đổi thiết bị
+    //First login update token
     public static void updateToken(Context context, String newToken, boolean isServer, boolean isShipper) {
         if (Common.currentServerUser.getUid() != null) {
             FirebaseDatabase.getInstance()
@@ -162,10 +168,12 @@ public class Common {
         }
     }
 
+    //
     public static String createTopicOrder() {
         return "/topics/new_order";
     }
 
+    //
     public static String getNewsTopic() {
         return "/topics/news";
     }

@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
-    android:layout_marginEnd="12dp"
-    app:cardCornerRadius="10dp">
+    android:layout_marginTop="@dimen/margin_default"
+    android:layout_marginEnd="@dimen/margin_default"
+    app:cardCornerRadius="@dimen/card_corner_default">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/card_view"
-        android:padding="10dp">
+        android:padding="@dimen/padding_default">
 
         <TextView
             android:id="@+id/txt_code"
-            style="@style/FirebaseUI.Text.Heading"
+            android:layout_marginBottom="@dimen/margin_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_slab_bold"
+            android:textSize="@dimen/font_large"
             android:text="@string/txt_code" />
 
         <TextView
             android:id="@+id/txt_percent"
-            style="@style/FirebaseUI.Text.BodyText"
+            android:layout_marginBottom="@dimen/margin_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_slab"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_small"
             android:text="@string/txt_percent" />
 
         <TextView
             android:id="@+id/txt_valid"
-            style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_slab"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_small"
             android:text="@string/txt_valid" />
-
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

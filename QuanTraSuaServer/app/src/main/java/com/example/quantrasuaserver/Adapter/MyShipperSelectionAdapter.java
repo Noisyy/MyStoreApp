@@ -47,7 +47,7 @@ public class MyShipperSelectionAdapter extends RecyclerView.Adapter<MyShipperSel
         holder.setIRecyclerClickListener((view, pos) -> {
             if(lastCheckedImageView != null)
                 lastCheckedImageView.setImageResource(0);
-            holder.img_checked.setImageResource(R.drawable.ic_check_24);
+            holder.img_checked.setImageResource(R.drawable.ic_done);
             lastCheckedImageView = holder.img_checked;
             selectShipper = shipperModelList.get(pos);
         });

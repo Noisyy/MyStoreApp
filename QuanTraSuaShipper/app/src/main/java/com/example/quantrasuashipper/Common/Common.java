@@ -1,5 +1,6 @@
 package com.example.quantrasuashipper.Common;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -26,44 +27,17 @@ import com.example.quantrasuashipper.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Common {
     public static final String SHIPPER_REF = "Shippers";
-    public static final String CATEGORY_REF = "Category";
-    public static final String NOTI_TITLE = "title";
-    public static final String NOTI_CONTENT = "content";
+    public static final String NOTIFY_TITLE = "title";
+    public static final String NOTIFY_CONTENT = "content";
     public static final String TOKEN_REF = "Tokens";
-    public static final String ORDER_REF = "Orders";
     public static final String SHIPPING_ORDER_DATA = "ShippingData";
     public static ShipperUserModel currentShipperUser;
-    public static int DEFAULT_COLUMN_COUNT = 0;
-    public static int FULL_WIDTH_COLUMN = 1;
     public static String SHIPPING_ORDER_REF = "ShippingOrder";
-
-
-    public static String formatPrice(double price) {
-        if (price != 0) {
-            DecimalFormat df = new DecimalFormat("#,##0.000");
-            df.setRoundingMode(RoundingMode.UP);
-            String finalPrice = new StringBuffer(df.format(price)).toString();
-            return finalPrice.replace(".", ",");
-        } else
-            return "0.000";
-    }
-
-    public static void setSpanString(String welcome, String name, TextView textView) {
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(welcome);
-        SpannableString spannableString = new SpannableString(name);
-        StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
-        spannableString.setSpan(boldSpan, 0, name.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        builder.append(spannableString);
-        textView.setText(builder, TextView.BufferType.SPANNABLE);
-    }
 
     public static void setSpanStringColor(String welcome, String name, TextView textView, int color) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
@@ -76,21 +50,7 @@ public class Common {
         textView.setText(builder, TextView.BufferType.SPANNABLE);
     }
 
-    public static String convertStatusToString(int orderStatus) {
-        switch (orderStatus) {
-            case 0:
-                return "Đã đặt hàng";
-            case 1:
-                return "Đang giao hàng";
-            case 2:
-                return "Đã giao hàng";
-            case -1:
-                return "Đã hủy đơn";
-            default:
-                return "Lỗi rồi ông ơi";
-        }
-    }
-
+    @SuppressLint("UnspecifiedImmutableFlag")
     public static void showNotification(Context context, int id, String title, String content, Intent intent) {
         PendingIntent pendingIntent = null;
         if (intent != null)
@@ -129,27 +89,22 @@ public class Common {
                 .getReference(Common.TOKEN_REF)
                 .child(Common.currentShipperUser.getUid())
                 .setValue(new TokenModel(Common.currentShipperUser.getPhone(), newToken, isServer, isShipper))
-                .addOnFailureListener(e -> {
-                    Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-
-    public static String createTopicOrder() {
-        return new StringBuilder("/topics/new_order").toString();
+                .addOnFailureListener(e -> Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     public static float getBearing(LatLng begin, LatLng end) {
         double lat = Math.abs(begin.latitude - end.latitude);
         double lng = Math.abs(begin.longitude - end.longitude);
 
+        double pos = Math.toDegrees(Math.atan(lng / lat));
         if (begin.latitude < end.latitude && begin.longitude < end.longitude)
-            return (float) (Math.toDegrees(Math.atan(lng / lat)));
+            return (float) pos;
         else if (begin.latitude >= end.latitude && begin.longitude < end.longitude)
-            return (float) ((90 - Math.toDegrees(Math.atan(lng / lat))) + 90);
+            return (float) ((90 - pos) + 90);
         else if (begin.latitude >= end.latitude && begin.longitude >= end.longitude)
-            return (float) (Math.toDegrees(Math.atan(lng / lat)) + 180);
+            return (float) (pos + 180);
         else if (begin.latitude < end.latitude && begin.longitude >= end.longitude)
-            return (float) ((90 - Math.toDegrees(Math.atan(lng / lat))) + 270);
+            return (float) ((90 - pos) + 270);
         return -1;
     }
 

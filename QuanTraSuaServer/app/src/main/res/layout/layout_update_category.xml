@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="@dimen/padding_default">
+
+    <TextView
+        android:id="@+id/txt_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:text="@string/tv_update"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_medium" />
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="14dp"
+        android:hint="@string/edt_category_name"
+        android:textColor="@color/black"
+        app:hintTextColor="@color/black">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_category_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edt_category_name"
-            android:inputType="text"
-            android:importantForAutofill="no" />
+            android:fontFamily="@font/roboto_slab"
+            android:padding="@dimen/padding_EditText"
+            android:textSize="@dimen/font_small" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
@@ -27,5 +45,32 @@
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:weightSum="2">
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/layout_custom_button_cancel"
+            android:fontFamily="@font/roboto_slab_bold"
+            android:text="@string/btn_cancel"
+            android:textColor="@android:color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_accept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/layout_custom_button_ok"
+            android:fontFamily="@font/roboto_slab_bold"
+            android:text="@string/btn_ok"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 </LinearLayout>

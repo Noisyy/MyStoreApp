@@ -10,71 +10,93 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/app_color_default">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tool_bar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            app:subtitleTextColor="@android:color/white"
+            android:layout_height="?attr/actionBarSize"
             android:theme="@style/ToolbarColoredBackArrow"
+            app:popupTheme="@style/Theme.QuanTraSuaServer.PopupOverlay"
+            app:titleTextAppearance="@style/RobotoTextViewStyle"
             app:titleTextColor="@android:color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_name"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/brandon_medium"
-        android:hint="Topping/Size Name"
-        android:padding="8dp"
-        android:textSize="22sp">
+        android:layout_margin="@dimen/margin_default"
+        android:hint="@string/tv_topping_size">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_slab"
+            android:padding="@dimen/padding_EditText"
+            android:textSize="@dimen/font_small" />
 
-    </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edt_price"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/brandon_medium"
-        android:hint="Topping/Size Price"
-        android:inputType="number"
-        android:padding="8dp"
-        android:textSize="22sp">
+        android:layout_marginBottom="@dimen/margin_default"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:hint="@string/txt_size_price">
 
-    </com.google.android.material.textfield.TextInputEditText>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_slab"
+            android:padding="@dimen/padding_EditText"
+            android:textSize="@dimen/font_small" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:weightSum="2">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_create"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:fontFamily="@font/brandon_medium"
-            android:text="Tạo mới" />
+            android:background="@drawable/layout_custom_button_cancel"
+            android:fontFamily="@font/roboto_slab_bold"
+            android:text="@string/btn_create"
+            android:textColor="@android:color/white" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="@dimen/margin_default"
             android:layout_weight="1"
+            android:background="@drawable/layout_custom_button_ok"
             android:enabled="false"
-            android:text="Cập nhật" />
+            android:fontFamily="@font/roboto_slab_bold"
+            android:text="@string/btn_edit"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_margin="@dimen/margin_default"
         android:id="@+id/recycler_addon_size"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="8dp" />
 
 </LinearLayout>

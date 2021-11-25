@@ -5,6 +5,6 @@
         android:id="@+id/action_save"
         android:orderInCategory="100"
         android:title="Lưu lại"
-        android:icon="@drawable/ic_white_save_24"
+        android:icon="@drawable/ic_save"
         app:showAsAction="always" />
 </menu>

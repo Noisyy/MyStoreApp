@@ -25,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        providers = Arrays.asList(new AuthUI.IdpConfig.PhoneBuilder().build());
+        providers = Collections.singletonList(new AuthUI.IdpConfig.PhoneBuilder().build());
 
         serverRef = FirebaseDatabase.getInstance().getReference(Common.SHIPPER_REF);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
                             ShipperUserModel userModel = snapshot.getValue(ShipperUserModel.class);
+                            assert userModel != null;
                             if(userModel.isActive()){
                                 goToHomeActivity(userModel);
                             }else {
@@ -156,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     private void phoneLogin() {
         startActivityForResult(AuthUI.getInstance()
                 .createSignInIntentBuilder()
+                .setIsSmartLockEnabled(false)
                 .setAvailableProviders(providers).build(), APP_REQUEST_CODE
         );
     }

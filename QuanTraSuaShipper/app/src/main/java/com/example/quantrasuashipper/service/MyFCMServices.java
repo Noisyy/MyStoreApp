@@ -18,8 +18,8 @@ public class MyFCMServices extends FirebaseMessagingService {
         if (dataReCV.size() > 0) {
             Log.d("PhiDep", "Message data payload: " + remoteMessage.getData());
             Common.showNotification(this, new Random().nextInt(),
-                    dataReCV.get(Common.NOTI_TITLE),
-                    dataReCV.get(Common.NOTI_CONTENT), null);
+                    dataReCV.get(Common.NOTIFY_TITLE),
+                    dataReCV.get(Common.NOTIFY_CONTENT), null);
         }
     }
 

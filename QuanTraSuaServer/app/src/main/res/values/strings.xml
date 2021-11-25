@@ -38,9 +38,9 @@
     <string name="txt_code">CODE</string>
     <string name="txt_percent">Percent</string>
     <string name="txt_valid">Valid</string>
-    <string name="edt_title">Tiêu đề nè</string>
-    <string name="edt_content">Nội dung nè</string>
-    <string name="add_image">Thêm hình ảnh</string>
+    <string name="edt_title">Tiêu đề</string>
+    <string name="edt_content">Nội dung</string>
+    <string name="add_image">Thêm thông tin</string>
     <string name="rdi_none">Hong có</string>
     <string name="rdi_link">Liên kết</string>
     <string name="rdi_image">Tải lên</string>
@@ -68,4 +68,10 @@
     <string name="edt_drinks_name">Tên sản phẩm</string>
     <string name="edt_drinks_price">Giá sản phẩm</string>
     <string name="edt_drinks_description">Mô tả</string>
+    <string name="tv_register">Đăng ký</string>
+    <string name="tv_topping_size">Topping/Size Name</string>
+    <string name="btn_create">Tạo mới</string>
+    <string name="btn_edit">Cập nhật</string>
+    <string name="tv_new_system">THÔNG BÁO MỚI</string>
+    <string name="tv_update">CẬP NHẬT SẢN PHẨM</string>
 </resources>

@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,12 +21,14 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.quantrasuaserver.Common.Common;
+import com.example.quantrasuaserver.Common.CustomDialog;
 import com.example.quantrasuaserver.Common.MySwiperHelper;
 import com.example.quantrasuaserver.EventBus.AddonSizeEditEvent;
 import com.example.quantrasuaserver.EventBus.ChangeMenuClick;
@@ -60,16 +64,12 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import dmax.dialog.SpotsDialog;
 
 public class DrinksListFragment extends Fragment {
-
     //Image upload
     private static final int PICK_IMAGE_REQUEST = 1234;
     private ImageView img_drinks;
     private StorageReference storageReference;
-    private android.app.AlertDialog dialog;
-
     private DrinksListViewModel drinksListViewModel;
     private List<DrinksModel> drinksModelList;
     private FragmentDrinkListBinding binding;
@@ -77,7 +77,9 @@ public class DrinksListFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.recycler_drink_list)
     RecyclerView recycler_drink_list;
-
+    AppCompatButton btn_accept;
+    AppCompatButton btn_cancel;
+    private EditText edt_search_view;
     LayoutAnimationController layoutAnimationController;
     MyDrinkListAdapter adapter;
     private Uri imageUri = null;
@@ -92,7 +94,10 @@ public class DrinksListFragment extends Fragment {
         SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName()));
-
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        edt_search_view = searchView.findViewById(R.id.search_src_text);
+        edt_search_view.setTextColor(Color.WHITE);
+        edt_search_view.setHintTextColor(Color.GRAY);
         //Events
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -110,8 +115,7 @@ public class DrinksListFragment extends Fragment {
         //Clear text when click to clear button Search view
         ImageView closeButton = searchView.findViewById(R.id.search_close_btn);
         closeButton.setOnClickListener(view -> {
-            EditText edt = searchView.findViewById(R.id.search_src_text);
-            edt.setText("");
+            edt_search_view.setText("");
             searchView.setQuery("", false);
             //Collapse the action view
             searchView.onActionViewCollapsed();
@@ -157,8 +161,6 @@ public class DrinksListFragment extends Fragment {
 
     private void initViews() {
         setHasOptionsMenu(true); //Enable menu in fragment
-
-        dialog = new SpotsDialog.Builder().setContext(getContext()).setCancelable(false).build();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
@@ -171,18 +173,16 @@ public class DrinksListFragment extends Fragment {
         //Get Size
         DisplayMetrics displayMetrics = new DisplayMetrics();
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
 
-
-        MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(), recycler_drink_list, width / 6) {
+        MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(), recycler_drink_list, Common.BUTTON_SIZE) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
-                buf.add(new MyButton(getContext(), "Xóa nè", 25, 0, Color.parseColor("#F44336"), pos -> {
+                buf.add(new MyButton(getContext(), Common.OPTIONS_DELETE, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_DELETE), pos -> {
                     if (drinksModelList != null) {
                         Common.selectDrinks = drinksModelList.get(pos);
                         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                        builder.setTitle("Xóa sản phẩm")
-                                .setMessage("Bạn có chắc chắn muốn xóa sản phẩm này hong?")
+                        builder.setTitle("Cảnh báo")
+                                .setMessage("Bạn có chắc chắn muốn xóa sản phẩm này không?")
                                 .setNegativeButton(Common.OPTIONS_CANCEL, (dialogInterface, i) ->
                                         dialogInterface.dismiss()).setPositiveButton(Common.OPTIONS_OK, (dialogInterface, i) -> {
                             DrinksModel drinksModel = adapter.getItemAtPosition(pos); //Get item in adapter
@@ -196,7 +196,7 @@ public class DrinksListFragment extends Fragment {
                         deleteDialog.show();
                     }
                 }));
-                buf.add(new MyButton(getContext(), "Cập nhật", 25, 0, Color.parseColor("#2196F3"), pos -> {
+                buf.add(new MyButton(getContext(), Common.OPTIONS_UPDATE, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_UPDATE), pos -> {
                     //Similar
                     DrinksModel drinksModel = adapter.getItemAtPosition(pos);
                     if (drinksModel.getPositionInList() == -1)
@@ -204,7 +204,7 @@ public class DrinksListFragment extends Fragment {
                     else
                         showUpdateDialog(drinksModel.getPositionInList(), drinksModel);
                 }));
-                buf.add(new MyButton(getContext(), "Size", 25, 0, Color.parseColor("#B39DDB"), pos -> {
+                buf.add(new MyButton(getContext(), "Size", Common.TEXT_SIZE, 0, Color.parseColor("#B39DDB"), pos -> {
                     DrinksModel drinksModel = adapter.getItemAtPosition(pos);
                     if (drinksModel.getPositionInList() == -1)
                         Common.selectDrinks = drinksModelList.get(pos);
@@ -217,7 +217,7 @@ public class DrinksListFragment extends Fragment {
                     else
                         EventBus.getDefault().postSticky(new AddonSizeEditEvent(false, drinksModel.getPositionInList()));
                 }));
-                buf.add(new MyButton(getContext(), "Topping", 25, 0, Color.parseColor("#4CAF50"), pos -> {
+                buf.add(new MyButton(getContext(), "Topping", Common.TEXT_SIZE, 0, Color.parseColor("#4CAF50"), pos -> {
                     DrinksModel drinksModel = adapter.getItemAtPosition(pos);
                     if (drinksModel.getPositionInList() == -1)
                         Common.selectDrinks = drinksModelList.get(pos);
@@ -232,6 +232,7 @@ public class DrinksListFragment extends Fragment {
                 }));
             }
         };
+        Log.d("TAG", "initViews: " + mySwiperHelper);
     }
 
     @Override
@@ -241,16 +242,19 @@ public class DrinksListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("SetTextI18n")
     private void showAddDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Thêm mới");
-        builder.setMessage("Vui lòng nhập đầy đủ thông tin");
 
         View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_update_drinks, null);
         TextInputEditText edt_drink_name = itemView.findViewById(R.id.edt_drinks_name);
         TextInputEditText edt_drink_price = itemView.findViewById(R.id.edt_drinks_price);
         TextInputEditText edt_drink_description = itemView.findViewById(R.id.edt_drinks_description);
+        TextView txt_view = itemView.findViewById(R.id.txt_view);
+        txt_view.setText(Common.TV_INSERT);
         img_drinks = itemView.findViewById(R.id.img_drink);
+        btn_cancel = itemView.findViewById(R.id.btn_cancel);
+        btn_accept = itemView.findViewById(R.id.btn_accept);
 
         //Set data
         Glide.with(requireContext()).load(R.drawable.image).into(img_drinks);
@@ -263,67 +267,66 @@ public class DrinksListFragment extends Fragment {
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         });
 
-        builder.setNegativeButton(Common.OPTIONS_CANCEL, (dialogInterface, i) ->
-                dialogInterface.dismiss()).setPositiveButton(Common.OPTIONS_OK, (dialogInterface, i) -> {
+        builder.setView(itemView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btn_cancel.setOnClickListener(view -> dialog.dismiss());
+        btn_accept.setOnClickListener(view -> {
+            CustomDialog.show(getContext());
             DrinksModel updateDrinks = new DrinksModel();
             updateDrinks.setName(Objects.requireNonNull(edt_drink_name.getText()).toString());
             updateDrinks.setId(UUID.randomUUID().toString());
             updateDrinks.setDescription(Objects.requireNonNull(edt_drink_description.getText()).toString());
             updateDrinks.setPrice(TextUtils.isEmpty(edt_drink_price.getText()) ? 0 : Long.parseLong(Objects.requireNonNull(edt_drink_price.getText()).toString()));
             if (imageUri != null) {
-                //In this, we will use Firebase Storage to upload image
-                dialog.setMessage("Uploading...");
-                dialog.show();
                 String unique_name = UUID.randomUUID().toString();
                 StorageReference imageFolder = storageReference.child("images/" + unique_name);
-
                 imageFolder.putFile(imageUri)
-                        .addOnCompleteListener(task -> {
+                        .addOnCompleteListener(task -> imageFolder.getDownloadUrl().addOnSuccessListener(uri -> {
+                            updateDrinks.setImage(uri.toString());
+                            if (Common.categorySelected.getDrinks() == null)
+                                Common.categorySelected.setDrinks(new ArrayList<>());
+                            Common.categorySelected.getDrinks().add(updateDrinks);
+                            updateDrinks(Common.categorySelected.getDrinks(), Common.ACTION.CREATE);
                             dialog.dismiss();
-                            imageFolder.getDownloadUrl().addOnSuccessListener(uri -> {
-                                updateDrinks.setImage(uri.toString());
-                                if (Common.categorySelected.getDrinks() == null)
-                                    Common.categorySelected.setDrinks(new ArrayList<>());
-                                Common.categorySelected.getDrinks().add(updateDrinks);
-                                updateDrinks(Common.categorySelected.getDrinks(), Common.ACTION.CREATE);
-                            }).addOnFailureListener(e -> {
-                                dialog.dismiss();
-                                Toast.makeText(getContext(), "ERROR " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            });
-                        }).addOnProgressListener(taskSnapshot -> {
-                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    dialog.setMessage(new StringBuffer("Uploading: ").append(progress).append("%"));
-                });
-
+                            CustomDialog.dismiss();
+                        }).addOnFailureListener(e -> {
+                            dialog.dismiss();
+                            CustomDialog.dismiss();
+                            Toast.makeText(getContext(), "ERROR " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }));
             } else {
                 if (Common.categorySelected.getDrinks() == null)
                     Common.categorySelected.setDrinks(new ArrayList<>());
                 Common.categorySelected.getDrinks().add(updateDrinks);
                 updateDrinks(Common.categorySelected.getDrinks(), Common.ACTION.CREATE);
+                dialog.dismiss();
+                CustomDialog.dismiss();
             }
         });
-        builder.setView(itemView);
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     private void showUpdateDialog(int pos, DrinksModel drinksModel) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Cập nhật");
-        builder.setMessage("Vui lòng nhập đầy đủ thông tin");
-
         View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_update_drinks, null);
         TextInputEditText edt_drink_name = itemView.findViewById(R.id.edt_drinks_name);
         TextInputEditText edt_drink_price = itemView.findViewById(R.id.edt_drinks_price);
         TextInputEditText edt_drink_description = itemView.findViewById(R.id.edt_drinks_description);
+        TextView txt_view = itemView.findViewById(R.id.txt_view);
+        btn_cancel = itemView.findViewById(R.id.btn_cancel);
+        btn_accept = itemView.findViewById(R.id.btn_accept);
         img_drinks = itemView.findViewById(R.id.img_drink);
-
+        txt_view.setText(Common.TV_UPDATE);
         //Set data
         edt_drink_name.setText(new StringBuffer().append(drinksModel.getName()));
         edt_drink_price.setText(new StringBuffer().append(drinksModel.getPrice()));
         edt_drink_description.setText(new StringBuffer().append(drinksModel.getDescription()));
         Glide.with(requireContext()).load(drinksModel.getImage()).into(img_drinks);
 
+        builder.setView(itemView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
         //Set Event
         img_drinks.setOnClickListener(view -> {
             Intent intent = new Intent();
@@ -331,45 +334,33 @@ public class DrinksListFragment extends Fragment {
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         });
-
-        builder.setNegativeButton(Common.OPTIONS_CANCEL, (dialogInterface, i) ->
-                dialogInterface.dismiss()).setPositiveButton(Common.OPTIONS_OK, (dialogInterface, i) -> {
-
+        btn_cancel.setOnClickListener(view -> dialog.dismiss());
+        btn_accept.setOnClickListener(view -> {
+            CustomDialog.show(getContext());
             drinksModel.setName(Objects.requireNonNull(edt_drink_name.getText()).toString());
             drinksModel.setDescription(Objects.requireNonNull(edt_drink_description.getText()).toString());
             drinksModel.setPrice(TextUtils.isEmpty(edt_drink_price.getText()) ? 0 : Long.parseLong(Objects.requireNonNull(edt_drink_price.getText()).toString()));
             if (imageUri != null) {
                 //In this, we will use Firebase Storage to upload image
-                dialog.setMessage("Uploading...");
-                dialog.show();
                 String unique_name = UUID.randomUUID().toString();
                 StorageReference imageFolder = storageReference.child("images/" + unique_name);
 
                 imageFolder.putFile(imageUri)
-                        .addOnCompleteListener(task -> {
+                        .addOnCompleteListener(task -> imageFolder.getDownloadUrl().addOnSuccessListener(uri -> {
+                            drinksModel.setImage(uri.toString());
+                            Common.categorySelected.getDrinks().set(pos, drinksModel);
+                            updateDrinks(Common.categorySelected.getDrinks(), Common.ACTION.UPDATE);
                             dialog.dismiss();
-                            imageFolder.getDownloadUrl().addOnSuccessListener(uri -> {
-                                drinksModel.setImage(uri.toString());
-                                Common.categorySelected.getDrinks().set(pos, drinksModel);
-                                updateDrinks(Common.categorySelected.getDrinks(), Common.ACTION.UPDATE);
-                            })
-                                    .addOnFailureListener(e -> {
-                                        dialog.dismiss();
-                                        Toast.makeText(getContext(), "ERROR " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    });
-                        }).addOnProgressListener(taskSnapshot -> {
-                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    dialog.setMessage(new StringBuffer("Uploading: ").append(progress).append("%"));
-                });
-
+                            CustomDialog.dismiss();
+                        })
+                                .addOnFailureListener(e -> Toast.makeText(getContext(), "ERROR " + e.getMessage(), Toast.LENGTH_SHORT).show()));
             } else {
                 Common.categorySelected.getDrinks().set(pos, drinksModel);
                 updateDrinks(Common.categorySelected.getDrinks(), Common.ACTION.UPDATE);
+                dialog.dismiss();
+                CustomDialog.dismiss();
             }
         });
-        builder.setView(itemView);
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     private void updateDrinks(List<DrinksModel> drinks, Common.ACTION action) {

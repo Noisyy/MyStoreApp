@@ -1,37 +1,39 @@
 package com.example.quantrasuaserver.Fragment.best_deals;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.quantrasuaserver.Adapter.MyBestDealsAdapter;
 import com.example.quantrasuaserver.Common.Common;
+import com.example.quantrasuaserver.Common.CustomDialog;
 import com.example.quantrasuaserver.Common.MySwiperHelper;
 import com.example.quantrasuaserver.EventBus.ToastEvent;
 import com.example.quantrasuaserver.Model.BestDealsModel;
 import com.example.quantrasuaserver.R;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -41,12 +43,12 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import dmax.dialog.SpotsDialog;
 
 public class BestDealsFragment extends Fragment {
 
@@ -58,7 +60,6 @@ public class BestDealsFragment extends Fragment {
     @BindView(R.id.recycler_best_deals)
     RecyclerView recycler_best_deals;
 
-    AlertDialog dialog;
     LayoutAnimationController layoutAnimationController;
     MyBestDealsAdapter adapter;
 
@@ -83,7 +84,6 @@ public class BestDealsFragment extends Fragment {
 
         mViewModel.getMessageError().observe(getViewLifecycleOwner(), s -> Toast.makeText(getContext(), "" + s, Toast.LENGTH_SHORT).show());
         mViewModel.getBestDealsListMutable().observe(getViewLifecycleOwner(), list -> {
-            dialog.dismiss();
             bestDealsModels = list;
             adapter = new MyBestDealsAdapter(getContext(), bestDealsModels);
             recycler_best_deals.setAdapter(adapter);
@@ -94,42 +94,39 @@ public class BestDealsFragment extends Fragment {
     }
 
     private void initViews() {
-
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-
-        dialog = new SpotsDialog.Builder().setContext(getContext()).setCancelable(false).build();
 
         layoutAnimationController = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_item_form_left);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recycler_best_deals.setLayoutManager(layoutManager);
-        //recycler_best_deals.addItemDecoration(new DividerItemDecoration(requireContext(), layoutManager.getOrientation()));
 
-        MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(), recycler_best_deals, 200) {
+        MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(), recycler_best_deals, Common.BUTTON_SIZE) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
-                buf.add(new MyButton(getContext(), "Cập nhật", 25, 0, Color.parseColor("#2196F3"), pos -> {
+                buf.add(new MyButton(getContext(), Common.OPTIONS_UPDATE, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_UPDATE), pos -> {
                     Common.bestDealsSelected = bestDealsModels.get(pos);
                     showUpdateDialog();
                 }));
-                buf.add(new MyButton(getContext(), "Xóa nè", 25, 0, Color.parseColor("#F44336"),
+                buf.add(new MyButton(getContext(), Common.OPTIONS_DELETE, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_DELETE),
                         pos -> {
                             Common.bestDealsSelected = bestDealsModels.get(pos);
                             showDeleteDialog();
                         }));
             }
         };
+        Log.d("TAG", "initViews: " + mySwiperHelper);
     }
 
     private void showDeleteDialog() {
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
-        builder.setTitle("Xóa nè");
-        builder.setMessage("Bạn có chắc chắn muốn xóa cái này hong?");
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Cảnh báo");
+        builder.setMessage("Bạn có chắc chắn muốn xóa cái này không?");
         builder.setNegativeButton(Common.OPTIONS_CANCEL, (dialogInterface, i) -> dialogInterface.dismiss())
                 .setPositiveButton(Common.OPTIONS_OK, (dialogInterface, i) -> deleteBestDeals());
 
-        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
     }
 
@@ -146,18 +143,19 @@ public class BestDealsFragment extends Fragment {
     }
 
     private void showUpdateDialog() {
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
-        builder.setTitle("Cập nhật");
-        builder.setMessage("Vui lòng nhập đầy đủ thông tin");
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_update_category, null);
-        EditText edt_category_name = itemView.findViewById(R.id.edt_category_name);
+        /*------------------------------------Init UI-----------------------------------------*/
+        TextInputEditText edt_category_name = itemView.findViewById(R.id.edt_category_name);
         img_best_deals = itemView.findViewById(R.id.image_category);
-
+        TextView txt_view = itemView.findViewById(R.id.txt_view);
+        AppCompatButton btn_accept = itemView.findViewById(R.id.btn_accept);
+        AppCompatButton btn_cancel = itemView.findViewById(R.id.btn_cancel);
+        /*------------------------------------------------------------------------------------*/
+        txt_view.setText(Common.TV_UPDATE);
         //set Data
         edt_category_name.setText(new StringBuffer().append(Common.bestDealsSelected.getName()));
         Glide.with(requireContext()).load(Common.bestDealsSelected.getImage()).into(img_best_deals);
-
         //set Event
         img_best_deals.setOnClickListener(view -> {
             Intent intent = new Intent();
@@ -165,42 +163,40 @@ public class BestDealsFragment extends Fragment {
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         });
-
-        builder.setNegativeButton(Common.OPTIONS_CANCEL, (dialogInterface, i) -> dialogInterface.dismiss());
-        builder.setPositiveButton(Common.OPTIONS_OK, (dialogInterface, i) -> {
+        //show Dialog
+        builder.setView(itemView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        //event Button
+        btn_cancel.setOnClickListener(view -> dialog.dismiss());
+        btn_accept.setOnClickListener(view -> {
+            CustomDialog.show(getContext());
             Map<String, Object> updateData = new HashMap<>();
-            updateData.put("name", edt_category_name.getText().toString());
-
+            updateData.put("name", Objects.requireNonNull(edt_category_name.getText()).toString());
             if (imageUri != null) {
                 //In this, use Firebase Storage to upload image
-                dialog.setMessage("Uploading...");
-                dialog.show();
                 String unique_name = UUID.randomUUID().toString();
                 StorageReference imageFolder = storageReference.child("images/" + unique_name);
-
                 imageFolder.putFile(imageUri)
                         .addOnCompleteListener(task -> {
                             dialog.dismiss();
                             imageFolder.getDownloadUrl().addOnSuccessListener(uri -> {
                                 updateData.put("image", uri.toString());
                                 updateBestDeals(updateData);
-                            })
-                                    .addOnFailureListener(e -> {
-                                        dialog.dismiss();
-                                        Toast.makeText(getContext(), "ERROR " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    });
-                        }).addOnProgressListener(taskSnapshot -> {
-                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    dialog.setMessage(new StringBuffer("Uploading: ").append(progress).append("%"));
-                });
+                                dialog.dismiss();
+                                CustomDialog.dismiss();
+                            }).addOnFailureListener(e -> {
+                                dialog.dismiss();
+                                CustomDialog.dismiss();
+                                Toast.makeText(getContext(), "ERROR " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                        });
             } else {
+                dialog.dismiss();
+                CustomDialog.dismiss();
                 updateBestDeals(updateData);
             }
         });
-
-        builder.setView(itemView);
-        androidx.appcompat.app.AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     private void updateBestDeals(Map<String, Object> updateData) {
@@ -225,6 +221,4 @@ public class BestDealsFragment extends Fragment {
             }
         }
     }
-
-
 }

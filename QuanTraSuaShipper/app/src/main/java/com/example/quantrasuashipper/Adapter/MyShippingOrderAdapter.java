@@ -1,5 +1,6 @@
 package com.example.quantrasuashipper.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -34,6 +35,7 @@ public class MyShippingOrderAdapter extends RecyclerView.Adapter<MyShippingOrder
     List<ShippingOrderModel> shippingOrderModelList;
     SimpleDateFormat simpleDateFormat;
 
+    @SuppressLint("SimpleDateFormat")
     public MyShippingOrderAdapter(Context context, List<ShippingOrderModel> shippingOrderModelList) {
         this.context = context;
         this.shippingOrderModelList = shippingOrderModelList;
@@ -80,19 +82,25 @@ public class MyShippingOrderAdapter extends RecyclerView.Adapter<MyShippingOrder
         return shippingOrderModelList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        private Unbinder unbinder;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        Unbinder unbinder;
 
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.txt_date)
         TextView txt_date;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.txt_order_number)
         TextView txt_order_number;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.txt_order_address)
         TextView txt_order_address;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.txt_payment)
         TextView txt_payment;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.img_drinks)
         ImageView img_drinks;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.btn_ship_now)
         MaterialButton btn_ship_now;
 

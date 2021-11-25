@@ -88,11 +88,11 @@ public class Profile_Fragment extends Fragment {
                     return;
                 }
                 if(strAddress.isEmpty()){
-                    edt_address.setError("Vui lòng nhập tên!");
+                    edt_address.setError("Vui lòng nhập địa chỉ!");
                     return;
                 }
                 if(strPhone.isEmpty()){
-                    edt_phone.setError("Vui lòng nhập tên!");
+                    edt_phone.setError("Vui lòng nhập số ĐT!");
                     return;
                 }
                 Map<String,Object> update_profile =new HashMap<>();

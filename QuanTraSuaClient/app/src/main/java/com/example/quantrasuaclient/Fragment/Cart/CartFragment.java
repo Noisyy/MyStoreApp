@@ -462,7 +462,6 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                                     }));
 
                         }
-
                         @Override
                         public void onError(@NonNull Throwable e) {
                             Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();

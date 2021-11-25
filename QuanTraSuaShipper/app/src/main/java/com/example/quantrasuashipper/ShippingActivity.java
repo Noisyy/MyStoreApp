@@ -1,12 +1,8 @@
 package com.example.quantrasuashipper;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -23,13 +19,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+
 import com.bumptech.glide.Glide;
 import com.example.quantrasuashipper.Common.Common;
-import com.example.quantrasuashipper.Common.LatLngInterpolator;
-import com.example.quantrasuashipper.Common.MarkerAnimation;
 import com.example.quantrasuashipper.Model.ShippingOrderModel;
 import com.example.quantrasuashipper.Remote.IGoogleAPI;
 import com.example.quantrasuashipper.Remote.RetrofitClient;
+import com.example.quantrasuashipper.databinding.ActivityShippingBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -45,8 +45,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.quantrasuashipper.databinding.ActivityShippingBinding;
-import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.SquareCap;
@@ -71,7 +69,6 @@ import butterknife.ButterKnife;
 import io.paperdb.Paper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class ShippingActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -82,7 +79,7 @@ public class ShippingActivity extends FragmentActivity implements OnMapReadyCall
     private LocationCallback locationCallback;
 
     private Marker shipperMarker;
-    private ShippingOrderModel shippingOrderModel;
+    ShippingOrderModel shippingOrderModel;
 
     private boolean isInit = false;
     private Location previousLocation = null;
@@ -97,34 +94,39 @@ public class ShippingActivity extends FragmentActivity implements OnMapReadyCall
     private PolylineOptions polylineOptions, blackPolylineOptions;
     private List<LatLng> polylineList;
     private IGoogleAPI iGoogleAPI;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_order_number)
     TextView txt_order_number;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_name)
     TextView txt_name;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_address)
     TextView txt_address;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_date)
     TextView txt_date;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_drinks_image)
     ImageView img_drinks_image;
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_start_trip)
     MaterialButton btn_start_trip;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_call)
     MaterialButton btn_call;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_done)
     MaterialButton btn_done;
-
-    private ActivityShippingBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityShippingBinding.inflate(getLayoutInflater());
+        com.example.quantrasuashipper.databinding.ActivityShippingBinding binding = ActivityShippingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         iGoogleAPI = RetrofitClient.getInstance().create(IGoogleAPI.class);
@@ -143,7 +145,8 @@ public class ShippingActivity extends FragmentActivity implements OnMapReadyCall
                         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
                         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                                 .findFragmentById(R.id.map);
-                        mapFragment.getMapAsync(ShippingActivity.this::onMapReady);
+                        assert mapFragment != null;
+                        mapFragment.getMapAsync(ShippingActivity.this);
 
                         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ShippingActivity.this);
                         if (ActivityCompat.checkSelfPermission(ShippingActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ShippingActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -172,6 +175,7 @@ public class ShippingActivity extends FragmentActivity implements OnMapReadyCall
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void setShippingOrder() {
         Paper.init(this);
         String data = Paper.book().read(Common.SHIPPING_ORDER_DATA);
@@ -224,17 +228,8 @@ public class ShippingActivity extends FragmentActivity implements OnMapReadyCall
                 }
 
                 if (isInit && previousLocation != null) {
-                    String from = new StringBuilder()
-                            .append(previousLocation.getLatitude())
-                            .append(",")
-                            .append(previousLocation.getLongitude())
-                            .toString();
-                    String to = new StringBuilder()
-                            .append(locationShipper.latitude)
-                            .append(",")
-                            .append(locationShipper.longitude)
-                            .toString();
-
+                    String from = previousLocation.getLatitude() + "," + previousLocation.getLongitude();
+                    String to = locationShipper.latitude + "," + locationShipper.longitude;
                     moveMarkerAnimation(shipperMarker, from, to);
 
                     previousLocation = locationResult.getLastLocation();
@@ -251,7 +246,7 @@ public class ShippingActivity extends FragmentActivity implements OnMapReadyCall
     private void moveMarkerAnimation(Marker marker, String from, String to) {
         //Request directions API to get Data
         compositeDisposable.add(iGoogleAPI.getDirections("driving",
-                "less_driving",
+                "less_walking",
                 from, to, getString(R.string.google_maps_key))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -313,24 +308,21 @@ public class ShippingActivity extends FragmentActivity implements OnMapReadyCall
                                 ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 1);
                                 valueAnimator.setDuration(1500);
                                 valueAnimator.setInterpolator(new LinearInterpolator());
-                                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                                    @Override
-                                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                                        v = valueAnimator.getAnimatedFraction();
-                                        lng = v * end.longitude + (1 - v) * start.longitude;
-                                        lat = v * end.latitude + (1 - v) * start.latitude;
-                                        LatLng newPos = new LatLng(lat, lng);
-                                        marker.setPosition(newPos);
-                                        marker.setAnchor(0.5f, 0.5f);
-                                        marker.setRotation(Common.getBearing(start, newPos));
+                                valueAnimator.addUpdateListener(valueAnimator1 -> {
+                                    v = valueAnimator1.getAnimatedFraction();
+                                    lng = v * end.longitude + (1 - v) * start.longitude;
+                                    lat = v * end.latitude + (1 - v) * start.latitude;
+                                    LatLng newPos = new LatLng(lat, lng);
+                                    marker.setPosition(newPos);
+                                    marker.setAnchor(0.5f, 0.5f);
+                                    marker.setRotation(Common.getBearing(start, newPos));
 
-                                        mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-                                    }
+                                    mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
                                 });
 
                                 valueAnimator.start();
-                                if(index < polylineList.size() - 2) //Reach destination
-                                    handler.postDelayed(this,1500);
+                                if (index < polylineList.size() - 2) //Reach destination
+                                    handler.postDelayed(this, 1500);
                             }
                         }, 3000);
                     } catch (Exception e) {

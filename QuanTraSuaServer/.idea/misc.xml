@@ -3,9 +3,61 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1296875" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1296875" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_baseline_delete_forever_24.xml" value="0.1296875" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_baseline_done_24.xml" value="0.1296875" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_baseline_perm_phone_msg_24.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_baseline_speaker_notes_24.xml" value="0.1296875" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_check_24.xml" value="0.1296875" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_image_24.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1296875" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_shipping_24.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_white_save_24.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/ic_white_search_24.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/layout_custom_button_cancel.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/layout_custom_button_ok.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/layout_dialog_conner_10.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/layout_dialog_conner_top_left_right.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/selector_menu.xml" value="0.2484375" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/drawable/side_nav_bar.xml" value="0.2484375" />
         <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/activity_demo.xml" value="0.2128623188405797" />
-        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/activity_home.xml" value="0.11354166666666667" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/activity_home.xml" value="0.264" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/activity_size_addon_edit.xml" value="0.264" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/app_bar_home.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/content_home.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_best_deals.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_category.xml" value="0.11354166666666667" />
         <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_demo.xml" value="0.2128623188405797" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_discount.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_drink_list.xml" value="0.20742753623188406" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_home.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_most_popular.xml" value="0.20742753623188406" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_order.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_order_filter.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/fragment_shipper.xml" value="0.11354166666666667" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_category_item.xml" value="0.2" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_dialog_order_detail.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_dialog_shipped.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_discount_item.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_drink_item.xml" value="0.20742753623188406" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_news_system.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_order_detail_item.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_order_item.xml" value="0.4" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_register.xml" value="0.2" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_shipper.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_shipper_selected.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_size_addon_display.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_update_category.xml" value="0.22010869565217392" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_update_discount.xml" value="0.264" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/layout_update_drinks.xml" value="0.20471014492753623" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/layout/nav_header_home.xml" value="0.4" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/menu/action_bar_menu.xml" value="0.23229166666666667" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/menu/activity_main_drawer.xml" value="0.23229166666666667" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/menu/addon_size_menu.xml" value="0.23229166666666667" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/menu/discount_menu.xml" value="0.23229166666666667" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/menu/drinks_list_menu.xml" value="0.16799999999999998" />
+        <entry key="..\:/LEARN/MyStoreApp/QuanTraSuaServer/app/src/main/res/menu/order_filter_menu.xml" value="0.23229166666666667" />
         <entry key="..\:/LEARN/SOURCE CODE/STORE_APP/App_Tra_Sua/QuanTraSuaServer/app/src/main/res/drawable/card_view.xml" value="0.14635416666666667" />
         <entry key="..\:/LEARN/SOURCE CODE/STORE_APP/App_Tra_Sua/QuanTraSuaServer/app/src/main/res/layout/activity_home.xml" value="0.13020833333333334" />
         <entry key="..\:/LEARN/SOURCE CODE/STORE_APP/App_Tra_Sua/QuanTraSuaServer/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />

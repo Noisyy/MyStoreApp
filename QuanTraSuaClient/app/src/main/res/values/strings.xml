@@ -78,5 +78,7 @@
     <string name="tv_ship">Lựa chọn nhận hàng</string>
     <string name="nav_profile">Người dùng</string>
     <string name="btn_update_profile">Cập nhật</string>
+    <!-- API KEY-->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyANY5gV9p_N2925s__J9P6XfN7IRkp2YvI</string>
 
 </resources>

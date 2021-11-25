@@ -15,13 +15,24 @@
       },
       "oauth_client": [
         {
+          "client_id": "10469446902-uc9vilvmi382ia0cnhuuslabs0i3p636.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quantrasuaclient",
+            "certificate_hash": "d72daa21ffbfced5e29263749a64ebd521d3091e"
+          }
+        },
+        {
           "client_id": "10469446902-nbfsqs13n9tc59k2tbmi7kpcnqu4msok.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyChjdoaaA8w6W8DWu_SfSyg3Lu5QYh0Vw8"
+          "current_key": "AIzaSyANY5gV9p_N2925s__J9P6XfN7IRkp2YvI"
+        },
+        {
+          "current_key": "AIzaSyCo8hBwsiXj7WlEDKKGD58g1JL8hTxLodw"
         }
       ],
       "services": {
@@ -44,13 +55,104 @@
       },
       "oauth_client": [
         {
+          "client_id": "10469446902-2l7nvcesh2fn41k0q89rmvnv2fi6e4av.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quantrasuaserver",
+            "certificate_hash": "d72daa21ffbfced5e29263749a64ebd521d3091e"
+          }
+        },
+        {
           "client_id": "10469446902-nbfsqs13n9tc59k2tbmi7kpcnqu4msok.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyChjdoaaA8w6W8DWu_SfSyg3Lu5QYh0Vw8"
+          "current_key": "AIzaSyANY5gV9p_N2925s__J9P6XfN7IRkp2YvI"
+        },
+        {
+          "current_key": "AIzaSyCo8hBwsiXj7WlEDKKGD58g1JL8hTxLodw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10469446902-nbfsqs13n9tc59k2tbmi7kpcnqu4msok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10469446902:android:d711831ebe6b18807708d7",
+        "android_client_info": {
+          "package_name": "com.example.quantrasuashipper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10469446902-iibjvg0g02drnigilotmgvroo3gjl820.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quantrasuashipper",
+            "certificate_hash": "d72daa21ffbfced5e29263749a64ebd521d3091e"
+          }
+        },
+        {
+          "client_id": "10469446902-nbfsqs13n9tc59k2tbmi7kpcnqu4msok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANY5gV9p_N2925s__J9P6XfN7IRkp2YvI"
+        },
+        {
+          "current_key": "AIzaSyCo8hBwsiXj7WlEDKKGD58g1JL8hTxLodw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10469446902-nbfsqs13n9tc59k2tbmi7kpcnqu4msok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10469446902:android:45a17e70785639a07708d7",
+        "android_client_info": {
+          "package_name": "dev.app.ShipperApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10469446902-c8dtj153gsgud7jc4b4f3fhc9ifbo964.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.app.ShipperApp",
+            "certificate_hash": "d72daa21ffbfced5e29263749a64ebd521d3091e"
+          }
+        },
+        {
+          "client_id": "10469446902-nbfsqs13n9tc59k2tbmi7kpcnqu4msok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANY5gV9p_N2925s__J9P6XfN7IRkp2YvI"
+        },
+        {
+          "current_key": "AIzaSyCo8hBwsiXj7WlEDKKGD58g1JL8hTxLodw"
         }
       ],
       "services": {

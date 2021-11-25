@@ -95,24 +95,22 @@ public class DiscountFragment extends Fragment {
         layoutAnimationController = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_item_form_left);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recycler_discount.setLayoutManager(layoutManager);
-        //recycler_discount.addItemDecoration(new DividerItemDecoration(requireContext(), layoutManager.getOrientation()));
 
-        MySwiperHelper swiperHelper = new MySwiperHelper(getContext(), recycler_discount, 200) {
+        MySwiperHelper swiperHelper = new MySwiperHelper(getContext(), recycler_discount, Common.BUTTON_SIZE) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
-                buf.add(new MyButton(getContext(), "Xóa nè", 25, 0, Color.parseColor("#F44336"),
+                buf.add(new MyButton(getContext(), Common.OPTIONS_DELETE, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_DELETE),
                         pos -> {
                             Common.discountSelected = discountModelList.get(pos);
                             showDeleteDialog();
                         }));
-                buf.add(new MyButton(getContext(), "Cập nhật", 25, 0, Color.parseColor("#2196F3"),
+                buf.add(new MyButton(getContext(), Common.OPTIONS_UPDATE, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_UPDATE),
                         pos -> {
                             Common.discountSelected = discountModelList.get(pos);
                             showUpdateDialog();
                         }));
             }
         };
-
     }
 
     private void showAddDialog() {
