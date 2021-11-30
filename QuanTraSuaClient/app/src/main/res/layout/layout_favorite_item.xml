@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@android:color/white"
-    android:layout_marginTop="12dp"
-    android:layout_marginEnd="12dp"
-    app:cardCornerRadius="10dp"
-    android:orientation="vertical">
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="@dimen/margin_8dp"
+    android:layout_marginEnd="@dimen/margin_8dp"
+    android:layout_marginBottom="2dp"
+    android:orientation="vertical"
+    app:strokeWidth="0.5dp"
+    app:strokeColor="@android:color/darker_gray"
+    style="@style/Widget.MaterialComponents.CardView"
+    app:cardBackgroundColor="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/layout_card_view"
         android:padding="10dp"
         android:weightSum="10">
 
         <ImageView
             android:id="@+id/img_drink_image"
             android:layout_width="0dp"
-            android:layout_weight="3"
             android:layout_height="100dp"
+            android:layout_weight="3"
             android:scaleType="fitXY"
-            android:src="@drawable/app_icon" />
+            android:src="@drawable/app_icon"
+            tools:ignore="ContentDescription" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -40,16 +45,16 @@
                 android:fontFamily="@font/roboto_slab_bold"
                 android:text="@string/txt_drinks_name"
                 android:textColor="@color/colorPrimary"
-                android:textSize="22sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txt_drink_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_slab"
-                android:textColor="@color/colorAccent"
                 android:text="@string/txt_drinks_price"
-                android:textSize="20sp" />
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txt_drink_description"
@@ -57,9 +62,9 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/roboto_slab"
                 android:text="@string/btn_place_order"
-                android:textSize="16.5sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

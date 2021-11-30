@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
@@ -32,24 +34,33 @@
             android:textColor="@color/app_color_default"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/edt_addresss"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/layout_custom_edit_text"
-            android:fontFamily="@font/roboto_slab"
+            android:layout_marginBottom="2dp"
             android:hint="@string/edt_address"
-            android:inputType="textMultiLine"
-            android:maxLines="5"
-            android:padding="10dp"
+            android:maxLines="4"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            app:endIconMode="clear_text"
+            app:startIconTint="@android:color/holo_red_dark"
+            app:helperTextTextColor="@android:color/holo_red_light"
+            app:startIconDrawable="@drawable/ic_location">
+
+            <EditText
+                android:id="@+id/edt_addresss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                tools:ignore="Autofill,LabelFor,TextFields" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/txt_address_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/roboto_slab"
             android:paddingStart="10dp"
@@ -59,19 +70,26 @@
             android:textSize="16sp"
             android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/edt_comments"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/layout_custom_edit_text"
-            android:fontFamily="@font/roboto_slab"
+            android:layout_marginTop="2dp"
             android:hint="@string/txt_order_comment"
-            android:inputType="textMultiLine"
-            android:maxLines="5"
-            android:padding="10dp"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            app:endIconMode="clear_text"
+            app:startIconTint="@android:color/holo_green_dark"
+            app:helperTextTextColor="@android:color/holo_red_light"
+            app:startIconDrawable="@drawable/fui_ic_phone_white_24dp">
+
+            <EditText
+                android:id="@+id/edt_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:fontFamily="@font/roboto_slab"
+                tools:ignore="Autofill,LabelFor,TextFields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -148,7 +166,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
             android:orientation="horizontal"
             android:weightSum="2">
 

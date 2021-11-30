@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="12dp"
-    android:layout_marginEnd="12dp"
-    app:cardCornerRadius="10dp"
-    android:orientation="vertical">
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="@dimen/margin_8dp"
+    android:layout_marginEnd="@dimen/margin_8dp"
+    android:layout_marginBottom="2dp"
+    android:orientation="vertical"
+    app:strokeColor="@android:color/darker_gray"
+    app:strokeWidth="0.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/layout_card_view"
         android:padding="10dp"
         android:weightSum="10">
 
@@ -36,9 +39,9 @@
                 android:id="@+id/txt_drinks_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/roboto_slab_bold"
                 android:text="@string/txt_drinks_name"
-                android:layout_marginBottom="5dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
 
@@ -46,16 +49,16 @@
                 android:id="@+id/txt_drinks_quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_slab"
                 android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto_slab"
                 android:text="@string/txt_drinks_quantity"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txt_drinks_add_on"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="5dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="@font/roboto_slab"
                 android:text="@string/add_on"
                 android:textSize="18sp" />
@@ -72,4 +75,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/background_color"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="@dimen/margin_8dp" />
 
 </RelativeLayout>

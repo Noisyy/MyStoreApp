@@ -50,7 +50,7 @@ public class MenuFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.recycler_menu)
     RecyclerView recycler_menu;
-
+    EditText edt_search_view;
     KProgressHUD dialog;
     LayoutAnimationController layoutAnimationController;
     MyCategoriesAdapter adapter;
@@ -113,6 +113,7 @@ public class MenuFragment extends Fragment {
         recycler_menu.addItemDecoration(new SpacesItemDecoration(8));
     }
 
+    @SuppressLint("CutPasteId")
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.layout_search_menu, menu);
@@ -122,7 +123,10 @@ public class MenuFragment extends Fragment {
         SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName()));
-
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        edt_search_view = searchView.findViewById(R.id.search_src_text);
+        edt_search_view.setTextColor(Color.WHITE);
+        edt_search_view.setHintTextColor(Color.GRAY);
         //Event
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

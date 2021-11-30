@@ -154,7 +154,7 @@ public class CategoryFragment extends Fragment {
         btn_accept = itemView.findViewById(R.id.btn_accept);
         btn_cancel = itemView.findViewById(R.id.btn_cancel);
         /*------------------------------------------------------------------------------------*/
-        txt_view.setText(Common.TV_UPDATE);
+        txt_view.setText(Common.TV_INSERT);
         //set Data
         Glide.with(requireContext()).load(R.drawable.image).into(img_category);
         //set Event

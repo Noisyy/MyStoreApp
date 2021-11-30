@@ -23,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:replace="android:theme">
+        tools:replace="android:theme"
+        tools:ignore="AllowBackup">
         <activity
             android:name=".Activity.ScanQRActivity"
             android:exported="true"

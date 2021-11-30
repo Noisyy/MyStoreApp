@@ -38,8 +38,8 @@ public class Common {
     //Global
     public static final String OPTIONS_OK = "ĐỒNG Ý";
     public static final String OPTIONS_CANCEL = "TỪ CHỐI";
-    public static final int TEXT_SIZE = 50;
-    public static final int BUTTON_SIZE = 210;
+    public static final int TEXT_SIZE = 32;
+    public static final int BUTTON_SIZE = 150;
     public static final String OPTIONS_DELETE = "Xóa";
     public static final String COLOR_DELETE = "#ff3d00";
     public static final String OPTIONS_UPDATE = "Sửa";

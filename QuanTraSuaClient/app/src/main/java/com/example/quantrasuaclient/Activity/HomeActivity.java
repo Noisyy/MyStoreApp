@@ -38,6 +38,7 @@ import com.example.quantrasuaclient.EventBus.ProfileUser;
 import com.example.quantrasuaclient.Model.CategoryModel;
 import com.example.quantrasuaclient.Model.DrinksModel;
 import com.example.quantrasuaclient.R;
+import com.example.quantrasuaclient.databinding.ActivityHomeBinding;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -119,10 +120,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        com.example.quantrasuaclient.databinding.ActivityHomeBinding binding = com.example.quantrasuaclient.databinding.ActivityHomeBinding.inflate(getLayoutInflater());
+        ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //Show dialog
+        //new dialog
         dialog = KProgressHUD.create(this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setCancellable(false)
@@ -270,7 +271,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
 
     }
-
+    //Log out
     private void SignOut() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Đăng xuất")

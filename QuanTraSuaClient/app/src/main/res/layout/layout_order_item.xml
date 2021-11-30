@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
-    android:layout_marginEnd="12dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="@dimen/margin_8dp"
+    android:layout_marginEnd="@dimen/margin_8dp"
+    android:layout_marginBottom="2dp"
     android:orientation="vertical"
-    app:cardCornerRadius="10dp">
+    app:strokeColor="@android:color/darker_gray"
+    app:strokeWidth="0.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/layout_card_view"
         android:padding="10dp"
         android:weightSum="10">
 
@@ -53,7 +56,7 @@
                 android:fontFamily="@font/roboto_slab"
                 android:text="@string/txt_drinks_quantity"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/txt_order_comment"
@@ -81,4 +84,4 @@
     </LinearLayout>
 
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

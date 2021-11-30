@@ -1,25 +1,23 @@
 package com.example.quantrasuaclient.Activity;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quantrasuaclient.Common.Common;
 import com.example.quantrasuaclient.Model.UserModel;
@@ -62,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
     private List<AuthUI.IdpConfig> providers;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -82,14 +78,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if ( dialog!=null && dialog.isShowing() ){
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
     }
@@ -109,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 .setCancellable(false)
                 .setAnimationSpeed(1)
                 .setDimAmount(0.5f).setWindowColor(Color.TRANSPARENT);
-        dialog.dismiss();
         //Set Permissions default run app
         listener = firebaseAuth -> {
             //Cái này để lấy vị trí local
@@ -159,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(braintreeToken -> {
+                                        dialog.dismiss();
                                         Toast.makeText(MainActivity.this, "Xin chào quý khách!", Toast.LENGTH_SHORT).show();
                                         UserModel userModel = snapshot.getValue(UserModel.class);
                                         gotoHomeActivity(userModel, braintreeToken.getToken());
@@ -182,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showRegisterDialog(FirebaseUser user) {
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View itemView = LayoutInflater.from(this).inflate(R.layout.layout_register, null);
         //Testing
         EditText edt_name = itemView.findViewById(R.id.edt_name);
@@ -190,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
         EditText edt_phone = itemView.findViewById(R.id.edt_phone);
         Button btn_register = itemView.findViewById(R.id.btn_register);
         Button btn_exit = itemView.findViewById(R.id.btn_exit);
-
         //Set phone
         if (user.getPhoneNumber() == null || TextUtils.isEmpty(user.getPhoneNumber())) {
             //edt_phone.setText(user.getEmail());
@@ -238,9 +232,8 @@ public class MainActivity extends AppCompatActivity {
             phoneLogin();
             firebaseAuth.removeAuthStateListener(listener);
         });
-        builder.setView(itemView);
-
-        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        //builder.setView(itemView);
+        AlertDialog dialog = builder.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.show();
@@ -270,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
     private void phoneLogin() {
         startActivityForResult(AuthUI.getInstance()
                         .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false)
                         .setLogo(R.drawable.app_icon)
                         .setTheme(R.style.LoginTheme)
                         .setAvailableProviders(providers).build(),
@@ -281,8 +275,10 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == APP_REQUEST_CODE) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
+            Log.d("Response_MAIN", "Response_MAIN: " + response);
             if (resultCode == RESULT_OK) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Log.d("FirebaseUser", "FirebaseUser: " + user);
             } else {
                 Toast.makeText(this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
             }

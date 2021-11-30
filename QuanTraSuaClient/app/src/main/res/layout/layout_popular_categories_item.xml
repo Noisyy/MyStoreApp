@@ -19,7 +19,6 @@
         android:fontFamily="@font/font_display"
         android:gravity="center"
         android:padding="5dp"
-        android:textColor="#757575"
         android:text="@string/popular_categories"
         android:textSize="17sp" />
 

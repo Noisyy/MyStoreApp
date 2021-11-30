@@ -62,7 +62,7 @@
     <string name="menu_cart">GIỎ HÀNG</string>
     <string name="nav_favorite">SẢN PHẨM YÊU THÍCH</string>
     <string name="tv_favorite">Sản phẩm yêu thích</string>
-    <string name="tv_new_user">Đăng ký thành viên mới</string>
+    <string name="tv_new_user">ĐĂNG KÝ</string>
     <string name="edt_phone">Số điện thoại</string>
     <string name="nav_home">Trang chủ</string>
     <string name="nav_menu">Sản phẩm</string>
@@ -80,5 +80,6 @@
     <string name="btn_update_profile">Cập nhật</string>
     <!-- API KEY-->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyANY5gV9p_N2925s__J9P6XfN7IRkp2YvI</string>
+    <string name="btn_register">Đăng ký</string>
 
 </resources>

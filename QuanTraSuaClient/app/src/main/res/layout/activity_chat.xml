@@ -18,70 +18,48 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
+            android:background="@color/app_color_default"
             android:theme="@style/ToolbarColoredBackArrow"
             app:popupTheme="@style/AppTheme"
-            app:title="Trò chuyện trực tuyến"
-            app:titleTextColor="@android:color/black" />
+            app:title="CHAT BOT"
+            app:titleTextAppearance="@style/RobotoTextViewStyle"
+            app:titleTextColor="@android:color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/chat_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true">
 
-        <ImageView
-            android:id="@+id/img_preview"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:visibility="gone"
-            tools:ignore="ContentDescription" />
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/edt_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:weightSum="10">
+            android:layout_toStartOf="@+id/btn_send"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingStart="@dimen/padding_10dp"
+            android:paddingEnd="@dimen/padding_10dp"
+            android:layout_centerInParent="true"
+            android:hint="@string/edt_chat"
+            android:singleLine="true"
+            android:textColorHint="@android:color/black"
+            tools:ignore="Autofill,TextFields" />
 
-            <ImageView
-                android:id="@+id/img_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_camera"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/img_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_image"
-                tools:ignore="ContentDescription" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edt_chat"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:hint="@string/edt_chat" />
-
-            <ImageView
-                android:id="@+id/img_send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@android:drawable/ic_menu_send"
-                tools:ignore="ContentDescription" />
-
-
-        </LinearLayout>
-
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="4dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_send"
+            app:backgroundTint="@color/app_color_default"
+            app:tint="@android:color/white"
+            tools:ignore="ContentDescription" />
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_chat"

@@ -16,10 +16,10 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            app:subtitleTextColor="@android:color/white"
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ToolbarColoredBackArrow"
             app:popupTheme="@style/Theme.QuanTraSuaServer.PopupOverlay"
+            app:subtitleTextColor="@android:color/white"
             app:titleTextAppearance="@style/RobotoTextViewStyle"
             app:titleTextColor="@android:color/white" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -45,9 +45,9 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_default"
         android:layout_marginStart="@dimen/margin_default"
         android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_default"
         android:hint="@string/txt_size_price">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -93,10 +93,12 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_margin="@dimen/margin_default"
         android:id="@+id/recycler_addon_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_default"
+        android:layout_marginRight="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_default"
         android:padding="8dp" />
 
 </LinearLayout>

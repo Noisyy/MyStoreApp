@@ -51,6 +51,7 @@ import com.braintreepayments.api.dropin.DropInRequest;
 import com.braintreepayments.api.dropin.DropInResult;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.example.quantrasuaclient.Callback.ISearchCategoryCallbackListener;
+import com.example.quantrasuaclient.Common.CustomDialog;
 import com.example.quantrasuaclient.Database.DataSource.ICartDataSource;
 import com.example.quantrasuaclient.Database.Local.RoomDatabase;
 import com.example.quantrasuaclient.Model.AddonModel;
@@ -170,11 +171,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
     @OnClick(R.id.img_check)
     void onApplyDiscount() {
         if (!TextUtils.isEmpty(edt_discount_code.getText().toString().toLowerCase())) {
-            AlertDialog dialog = new AlertDialog.Builder(requireContext())
-                    .setCancelable(false)
-                    .setMessage("Làm ơn chờ...")
-                    .create();
-            dialog.show();
+            CustomDialog.show(getContext());
 
             final DatabaseReference offsetRef = FirebaseDatabase.getInstance().getReference(".info/serverTimeOffset");
             final DatabaseReference discountRef = FirebaseDatabase.getInstance().getReference(Common.DISCOUNT_REF);
@@ -195,23 +192,23 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                                         }
                                         if (discountModel != null) {
                                             if (discountModel.getUntilDate() < estimatedServerTimeMS) {
-                                                dialog.dismiss();
+                                                CustomDialog.dismiss();
                                                 listener.onLoadFailed("Mã giảm giá đã hết hạn sử dụng");
                                             } else {
-                                                dialog.dismiss();
+                                                CustomDialog.dismiss();
                                                 Common.discountApply = discountModel;
                                                 sumAllItemInCart();
                                             }
                                         }
                                     } else {
-                                        dialog.dismiss();
+                                        CustomDialog.dismiss();
                                         listener.onLoadFailed("Mã giảm giá không hợp lệ");
                                     }
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-                                    dialog.dismiss();
+                                    CustomDialog.dismiss();
                                     listener.onLoadFailed(error.getMessage());
                                 }
                             });
@@ -219,7 +216,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    dialog.dismiss();
+                    CustomDialog.dismiss();
                     listener.onLoadFailed(error.getMessage());
                 }
             });
@@ -230,10 +227,10 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_place_order)
     void onPlaceOrderClick() {
+        //new Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-
         View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_place_order, null);
-
+        //---------------------Find Item---------------------//
         EditText edt_address = view.findViewById(R.id.edt_addresss);
         EditText edt_comment = view.findViewById(R.id.edt_comments);
         TextView txt_address = view.findViewById(R.id.txt_address_detail);
@@ -244,11 +241,11 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         RadioButton rdi_braintree = view.findViewById(R.id.rdi_braintree);
         Button btn_ok = view.findViewById(R.id.btn_ok);
         Button btn_cancel = view.findViewById(R.id.btn_cancel);
-
-        //Data
+        //---------------------Find Item---------------------//
+        //Set Data Default
         edt_address.setText(Common.currentUser.getAddress()); //Address default
         edt_comment.setText(Common.currentUser.getPhone()); //Phone default
-        //Event
+        //Address Default
         rdi_home.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 edt_address.setText(Common.currentUser.getAddress());
@@ -256,25 +253,18 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                 txt_address.setVisibility(View.GONE);
             }
         });
-
+        //Address other
         rdi_other_address.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 edt_address.setText(""); //Clear
                 txt_address.setVisibility(View.GONE);
             }
         });
-
+        //Get this address
         rdi_ship_to_this.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
                 if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 fusedLocationProviderClient.getLastLocation().addOnFailureListener(e -> {
@@ -284,11 +274,8 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                     String coordinates = task.getResult().getLatitude() +
                             "/" +
                             task.getResult().getLongitude();
-
                     Single<String> singleAddress = Single.just(getAddressFromLatLng(task.getResult().getLatitude(), task.getResult().getLongitude()));
-
                     Disposable disposable = singleAddress.subscribeWith(new DisposableSingleObserver<String>() {
-
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onSuccess(@NonNull String s) {
@@ -304,10 +291,12 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                             txt_address.setVisibility(View.VISIBLE);
                         }
                     });
+                    Log.d("TAG", "onPlaceOrderClick: " + disposable);
                 });
             }
-        });
 
+        });
+        //Set View
         builder.setView(view);
         AlertDialog dialog = builder.create();
         Window window = dialog.getWindow();
@@ -318,8 +307,10 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
         dialog.show();
+        //Event button
         btn_cancel.setOnClickListener(v -> dialog.dismiss());
         btn_ok.setOnClickListener(v -> {
+            //Check Valid Data
             if (edt_address.getText().toString().isEmpty()) {
                 edt_address.setError("Vui lòng cung cấp địa chỉ nhận hàng!");
                 edt_address.requestFocus();
@@ -327,9 +318,10 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                 edt_comment.setError("Vui lòng cung cấp số điện thoại liên lạc!");
                 edt_comment.requestFocus();
             } else {
+                //Cod Payment
                 if (rdi_cod.isChecked())
                     paymentCOD(edt_address.getText().toString(), edt_comment.getText().toString());
-                else if (rdi_braintree.isChecked()) {
+                else if (rdi_braintree.isChecked()) { //BrainTree Payment
                     address = edt_address.getText().toString();
                     comment = edt_comment.getText().toString();
                     if (!TextUtils.isEmpty(Common.currentToken)) {
@@ -340,9 +332,9 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                 dialog.dismiss();
             }
         });
-
     }
 
+    //Payment COD
     private void paymentCOD(String address, String comment) {
         compositeDisposable.add(cartDataSource.getAllCart(Common.currentUser.getUid())
                 .subscribeOn(Schedulers.io())
@@ -401,6 +393,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                         Toast.makeText(getContext(), "" + throwable.getMessage(), Toast.LENGTH_SHORT).show()));
     }
 
+    //Sync time local
     private void syncLocalTimeWithGlobalTime(OrderModel order) {
         final DatabaseReference offsetRef = FirebaseDatabase.getInstance().getReference(".info/serverTimeOffset");
         offsetRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -425,6 +418,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         });
     }
 
+    //Save data with firebase
     private void writeOrderToFirebase(OrderModel order) {
         FirebaseDatabase.getInstance()
                 .getReference(Common.ORDER_REF)
@@ -462,6 +456,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                                     }));
 
                         }
+
                         @Override
                         public void onError(@NonNull Throwable e) {
                             Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -470,6 +465,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         });
     }
 
+    //get Address
     private String getAddressFromLatLng(double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
         String result;
@@ -497,11 +493,11 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
 
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         View root = inflater.inflate(R.layout.fragment_cart, container, false);
-
+        //Service
         ifcmService = RetrofitFCMClient.getInstance().create(IFCMService.class);
         cloudFunctions = RetrofitICloudClient.getInstance().create(ICloudFunctions.class);
-
         listener = this;
+        //get cart + get data
         cartViewModel.initCartDataSource(getContext());
         cartViewModel.getMutableLiveDataListCartItems().observe(getViewLifecycleOwner(), cartItems -> {
             if (cartItems == null || cartItems.isEmpty()) {
@@ -526,24 +522,19 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         return root;
     }
 
+    //Init location
     private void initLocation() {
         buildLocationOnRequest();
         buildLocationCallBack();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
     }
 
+    //Callback Location
     private void buildLocationCallBack() {
         locationCallback = new LocationCallback() {
             @Override
@@ -554,6 +545,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         };
     }
 
+    //Location on request
     private void buildLocationOnRequest() {
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -563,11 +555,12 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
 
     }
 
+    //Init view
     private void initViews() {
         searchDrinksCallbackListener = this;
         setHasOptionsMenu(true);
         cartDataSource = new CartDataSource(RoomDatabase.getInstance(getContext()).cartDAO());
-
+        //Event bus hide cart + chat
         EventBus.getDefault().postSticky(new HideFABCart(true));
         recycler_cart.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -635,6 +628,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                         }));
             }
         };
+        Log.d("TAG", "initViews: " + mySwiperHelper);
         sumAllItemInCart();
 
         //Addon
@@ -651,11 +645,13 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         });
     }
 
+    //Dialog dismiss
     private void scheduleDismiss() {
         Handler handler = new Handler();
         handler.postDelayed(() -> dialog.dismiss(), 500);
     }
 
+    //Select addon
     private void displayUserSelectedAddon(ChipGroup chip_group_user_select_addon) {
         if (Common.selectDrinks.getUserSelectedAddon() != null && Common.selectDrinks.getUserSelectedAddon().size() > 0) {
             chip_group_user_select_addon.removeAllViews();
@@ -677,6 +673,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
             chip_group_user_select_addon.removeAllViews();
     }
 
+    //Sum item
     private void sumAllItemInCart() {
         cartDataSource.sumPriceInCart(Common.currentUser.getUid())
                 .subscribeOn(Schedulers.io())
@@ -710,6 +707,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                 });
     }
 
+    //Menu
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.layout_remove_cart_menu, menu);
@@ -770,13 +768,6 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         if (fusedLocationProviderClient != null) {
             if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
@@ -813,6 +804,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         }
     }
 
+    //calculate
     private void calculateTotalPrice() {
         cartDataSource.sumPriceInCart(Common.currentUser.getUid())
                 .subscribeOn(Schedulers.io())
@@ -869,27 +861,25 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         }
     }
 
+    //Update order
     private void showUpdateDialog(CartItem cartItem, DrinksModel drinksModel) {
         Common.selectDrinks = drinksModel;
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_dialog_update_cart, null);
         builder.setView(itemView);
-
         //View
         Button btn_ok = itemView.findViewById(R.id.btn_ok);
         Button btn_cancel = itemView.findViewById(R.id.btn_cancel);
-
         RadioGroup rdi_group_size = itemView.findViewById(R.id.rdi_group_size);
-
         chip_group_user_select_addon = itemView.findViewById(R.id.chip_group_user_selected_addon);
         ImageView img_addon = itemView.findViewById(R.id.img_add_addon);
+        //event
         img_addon.setOnClickListener(view -> {
             if (drinksModel.getAddon() != null) {
                 displayAddonList();
                 addonBottomSheetDialog.show();
             }
         });
-
         //Size
         if (drinksModel.getSize() != null) {
             for (SizeModel sizeModel : drinksModel.getSize()) {
@@ -906,6 +896,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
                 radioButton.setLayoutParams(params);
                 radioButton.setText(sizeModel.getName());
+                radioButton.setTextSize(16);
                 radioButton.setTag(sizeModel.getPrice());
 
                 rdi_group_size.addView(radioButton);
@@ -986,6 +977,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         btn_cancel.setOnClickListener(view -> dialog.dismiss());
     }
 
+    //Already addon
     private void displayAlreadySelectedAddon(ChipGroup chip_group_user_select_addon, CartItem cartItem) {
         //this function will display all addon we already select before add to cart end display on layout
         if (cartItem.getDrinksAddon() != null && !cartItem.getDrinksAddon().equals("Default")) {
@@ -1011,13 +1003,12 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
         }
     }
 
+    //Addon List
     private void displayAddonList() {
         if (Common.selectDrinks.getAddon() != null && Common.selectDrinks.getAddon().size() > 0) {
             chip_group_addon.clearCheck();
             chip_group_addon.removeAllViews();
-
             edt_search.addTextChangedListener(this);
-
             //Add all view
             for (AddonModel addonModel : Common.selectDrinks.getAddon()) {
                 @SuppressLint("InflateParams")
@@ -1032,7 +1023,6 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                     }
                 });
                 chip_group_addon.addView(chip);
-
             }
         }
     }
@@ -1047,6 +1037,7 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
 
     }
 
+    //Search Addon
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         chip_group_addon.clearCheck();
@@ -1082,7 +1073,6 @@ public class CartFragment extends Fragment implements ILoadTimeFromFireBaseListe
                 assert data != null;
                 DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
                 PaymentMethodNonce nonce = result.getPaymentMethodNonce();
-
                 //Calculate sum cart
                 cartDataSource.sumPriceInCart(Common.currentUser.getUid())
                         .subscribeOn(Schedulers.io())

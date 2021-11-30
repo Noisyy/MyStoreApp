@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quantrasuaserver.Adapter.MyShipperSelectionAdapter;
 import com.example.quantrasuaserver.Callback.IShipperLoadCallbackListener;
+import com.example.quantrasuaserver.Common.CustomDialog;
 import com.example.quantrasuaserver.EventBus.LoadOrderEvent;
 import com.example.quantrasuaserver.Model.FCMSendData;
 import com.example.quantrasuaserver.Model.OrderModel;
@@ -72,7 +74,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import dmax.dialog.SpotsDialog;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -137,9 +138,6 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-
-
         MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(), recycler_order, Common.BUTTON_SIZE) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
@@ -171,9 +169,10 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
                 buf.add(new MyButton(getContext(), Common.OPTIONS_DELETE, Common.TEXT_SIZE, 0, Color.parseColor(Common.COLOR_DELETE), pos -> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                             .setTitle("Cảnh báo")
-                            .setMessage("Bạn có chắc chắn muốn hủy đơn hàng này?")
+                            .setMessage("Bạn có chắc chắn muốn xóa đơn hàng này?")
                             .setNegativeButton(Common.OPTIONS_CANCEL, (dialogInterface, i) -> dialogInterface.dismiss())
                             .setPositiveButton(Common.OPTIONS_OK, (dialogInterface, i) -> {
+                                CustomDialog.show(getContext());
                                 OrderModel orderModel = adapter.getItemAtPosition(pos);
                                 FirebaseDatabase.getInstance()
                                         .getReference(Common.ORDER_REF)
@@ -185,7 +184,8 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
                                             adapter.notifyItemRemoved(pos);
                                             updateTextCounter();
                                             dialogInterface.dismiss();
-                                            Toast.makeText(getContext(), "Đơn hàng đã hủy thành công!", Toast.LENGTH_SHORT).show();
+                                            CustomDialog.dismiss();
+                                            Toast.makeText(getContext(), "Đơn hàng đã xóa thành công!", Toast.LENGTH_SHORT).show();
                                         });
                             });
                     //Create dialog
@@ -200,6 +200,7 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
                         showEditDialog(adapter.getItemAtPosition(pos), pos)));
             }
         };
+        Log.e("TAG", "initViews: " + mySwiperHelper);
     }
 
     @SuppressLint("InflateParams")
@@ -217,7 +218,6 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
             layout_dialog = LayoutInflater.from(getContext()).inflate(R.layout.layout_dialog_shipped, null);
             builder = new AlertDialog.Builder(requireContext()).setView(layout_dialog);
         }
-
         //View
         Button btn_ok = layout_dialog.findViewById(R.id.btn_ok);
         Button btn_cancel = layout_dialog.findViewById(R.id.btn_cancel);
@@ -242,7 +242,6 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
         else
             showDialog(pos, orderModel, dialog, btn_ok, btn_cancel,
                     rdi_shipping, rdi_shipped, rdi_cancelled, rdi_delete, rdi_restore_placed);
-
     }
 
     private void loadShipperList(int pos, OrderModel orderModel, AlertDialog dialog, Button btn_ok, Button btn_cancel, RadioButton rdi_shipping, RadioButton rdi_shipped, RadioButton rdi_cancelled, RadioButton rdi_delete, RadioButton rdi_restore_placed) {
@@ -374,7 +373,6 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
 
     private void deleteOrder(int pos, OrderModel orderModel) {
         if (!TextUtils.isEmpty(orderModel.getKey())) {
-
             FirebaseDatabase.getInstance().getReference(Common.ORDER_REF)
                     .child(orderModel.getKey())
                     .removeValue()
@@ -401,11 +399,8 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
                     .updateChildren(updateData)
                     .addOnFailureListener(e -> Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show())
                     .addOnSuccessListener(unused -> {
-
                         //Show dialog
-                        android.app.AlertDialog dialog = new SpotsDialog.Builder().setContext(getContext()).setCancelable(false).build();
-                        dialog.show();
-
+                        CustomDialog.show(getContext());
                         //First, get token of user
                         FirebaseDatabase.getInstance()
                                 .getReference(Common.TOKEN_REF)
@@ -428,7 +423,7 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
                                             compositeDisposable.add(ifcmService.sendNotification(sendData)
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread()).subscribe(fcmResponse -> {
-                                                        dialog.dismiss();
+                                                        CustomDialog.dismiss();
                                                         if (fcmResponse.getSuccess() == 1) {
                                                             Toast.makeText(getContext(), "Cập nhật đơn hàng thành công!", Toast.LENGTH_SHORT).show();
                                                         } else {
@@ -437,14 +432,14 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
                                                     }, throwable ->
                                                             Toast.makeText(getContext(), "" + throwable.getMessage(), Toast.LENGTH_SHORT).show()));
                                         } else {
-                                            dialog.dismiss();
+                                            CustomDialog.dismiss();
                                             Toast.makeText(getContext(), "Token not found", Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
-                                        dialog.dismiss();
+                                        CustomDialog.dismiss();
                                         Toast.makeText(getContext(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
@@ -503,7 +498,7 @@ public class OrderFragment extends Fragment implements IShipperLoadCallbackListe
         super.onDestroyView();
         binding = null;
     }
-
+    //Event Bus
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onLoadOrderEvent(LoadOrderEvent event) {
         orderViewModel.loadOrderByStatus(event.getStatus());

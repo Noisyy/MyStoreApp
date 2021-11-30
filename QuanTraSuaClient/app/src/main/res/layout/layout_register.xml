@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/padding_12dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         android:layout_gravity="center_vertical"
         android:fontFamily="@font/roboto_slab_bold"
         android:gravity="center"
-        android:padding="12dp"
+        android:padding="@dimen/padding_10dp"
         android:text="@string/tv_new_user"
         android:textColor="@color/colorPrimary"
         android:textSize="28sp" />
@@ -27,6 +28,8 @@
         app:counterEnabled="true"
         app:counterMaxLength="50"
         app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:startIconTint="@android:color/black"
         app:helperTextTextColor="@android:color/holo_red_light"
         app:startIconDrawable="@drawable/ic_account_circle">
 
@@ -46,14 +49,18 @@
         android:layout_height="wrap_content"
         android:hint="@string/edt_address"
         android:textColor="@android:color/black"
+        app:counterEnabled="true"
+        app:counterMaxLength="255"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
+        app:startIconTint="@android:color/holo_red_dark"
         app:helperTextTextColor="@android:color/holo_red_light"
         app:startIconDrawable="@drawable/ic_location">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_address"
             android:layout_width="match_parent"
+            android:maxLines="3"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_slab"
             android:textSize="18sp" />
@@ -69,6 +76,7 @@
         app:counterMaxLength="15"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
+        app:startIconTint="@android:color/holo_green_dark"
         app:helperTextTextColor="@android:color/holo_red_light"
         app:startIconDrawable="@drawable/fui_ic_phone_white_24dp">
 
@@ -81,36 +89,41 @@
             android:textSize="18sp"
             app:counterMaxLength="15" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="4"
-        android:gravity="right"
-        android:orientation="horizontal">
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
         <Button
-            android:layout_width="0dp"
-            android:layout_weight="1.4"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="6dp"
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:fontFamily="@font/roboto_slab_bold"
             android:id="@+id/btn_exit"
-            android:text="Thoát"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1.4"
             android:backgroundTint="@android:color/darker_gray"
-            android:layout_height="wrap_content"/>
+            android:fontFamily="@font/roboto_slab_bold"
+            android:padding="@dimen/padding_12dp"
+            android:text="Thoát"
+            android:textSize="16sp"
+            tools:ignore="ButtonStyle,HardcodedText" />
+
         <Button
             android:id="@+id/btn_register"
             android:layout_width="0dp"
-            android:layout_weight="1.4"
+            android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:textColor="@color/white"
-            android:layout_marginTop="12dp"
-            android:padding="10dp"
-            android:textSize="16sp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_weight="1.4"
             android:fontFamily="@font/roboto_slab_bold"
-            android:text="Đăng ký"
-            android:layout_height="wrap_content"/>
+            android:padding="@dimen/padding_12dp"
+            android:text="@string/btn_register"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 </LinearLayout>
 
