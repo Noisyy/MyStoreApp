@@ -13,4 +13,13 @@
     <color name="dialog_header_color">#c5c5c5</color>
     <color name="dialog_text_color">#464646</color>
     <color name="app_color_default">#ef473a</color>
+    <color name="primary">#6A7CFF</color>
+    <color name="background">#F7F7FA</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="primary_text">#565B65</color>
+    <color name="secondary_text">#989A9D</color>
+    <color name="dashboard_item_1">#2CC2EA</color>
+    <color name="dashboard_item_2">#4DE9C9</color>
+    <color name="dashbroad_item_3">#72A4FF</color>
+    <color name="dashbroad_item_4">#8B72FF</color>
 </resources>

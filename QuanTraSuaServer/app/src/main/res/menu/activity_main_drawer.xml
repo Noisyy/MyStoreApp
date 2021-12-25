@@ -53,6 +53,12 @@
     </group>
 
     <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_dashboard"
+        android:icon="@drawable/monitor"
+        android:title="DashBoard"/>
+    </group>
+
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_sign_out"
             android:icon="@drawable/ic_nav_sign_out"

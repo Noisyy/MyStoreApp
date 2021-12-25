@@ -74,4 +74,8 @@
     <string name="btn_edit">Cập nhật</string>
     <string name="tv_new_system">THÔNG BÁO MỚI</string>
     <string name="tv_update">CẬP NHẬT SẢN PHẨM</string>
+    <string name="shot_views">Shot Views</string>
+    <string name="more">more</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
